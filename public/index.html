@@ -1,107 +1,55 @@
-<!-- MAIN CONTAINER -->
-<main class="flex-grow max-w-7xl w-full mx-auto p-3 sm:p-6">
-    <!-- STUDENT PORTAL SECTION -->
-    <section id="student-section" class="block">
-        <div class="bg-white rounded-xl shadow-md p-4 sm:p-6 max-w-2xl mx-auto border-t-4 border-red-700">
-            <h2 class="text-xl sm:text-2xl font-bold text-red-800 mb-2 flex items-center gap-2">
-                <i class="fa-solid fa-magnifying-glass"></i> Check Student Academic Report
-            </h2>
-            <p class="text-slate-600 text-xs sm:text-sm mb-4 sm:mb-6">Enter Student Name, Class Level, and Academic Term to access records.</p>
-            
-            <form id="result-search-form" onsubmit="handleResultSearch(event)" class="space-y-4">
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Delight International School - Result Portal</title>
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- FontAwesome Icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+</head>
+<body class="bg-slate-100 text-slate-800 font-sans min-h-screen flex flex-col">
+    <!-- Header Navigation -->
+    <header class="bg-red-800 text-white shadow-md">
+        <div class="max-w-7xl mx-auto px-4 py-3 flex flex-col sm:flex-row justify-between items-center gap-3">
+            <div class="flex items-center gap-3 text-center sm:text-left">
+                <img src="logo.png" alt="School Crest" class="h-12 w-12 object-cover rounded-full bg-white p-0.5 shadow-md border border-red-900 mx-auto sm:mx-0" onerror="this.src='https://via.placeholder.com/50?text=LOGO'">
                 <div>
-                    <label class="block text-xs sm:text-sm font-semibold text-slate-700 mb-1">Student Full Name</label>
-                    <input type="text" id="search-name" required placeholder="e.g. Lord Terna" class="w-full px-3 py-2 sm:px-4 sm:py-2.5 border rounded-lg text-sm focus:ring-2 focus:ring-red-600 focus:outline-none">
-                </div>
-                <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
-                    <div>
-                        <label class="block text-xs sm:text-sm font-semibold text-slate-700 mb-1">Class Level</label>
-                        <select id="search-class" required class="w-full px-3 py-2 sm:px-4 sm:py-2.5 border rounded-lg text-sm focus:ring-2 focus:ring-red-600 focus:outline-none">
-                            <option value="">Select Class</option>
-                            <option value="JSS 1">JSS 1</option>
-                            <option value="JSS 2">JSS 2</option>
-                            <option value="JSS 3" selected>JSS 3</option>
-                            <option value="SS 1">SS 1</option>
-                            <option value="SS 2">SS 2</option>
-                            <option value="SS 3">SS 3</option>
-                        </select>
-                    </div>
-                    <div>
-                        <label class="block text-xs sm:text-sm font-semibold text-slate-700 mb-1">Academic Term</label>
-                        <select id="search-term" required class="w-full px-3 py-2 sm:px-4 sm:py-2.5 border rounded-lg text-sm focus:ring-2 focus:ring-red-600 focus:outline-none">
-                            <option value="First Term">First Term</option>
-                            <option value="Second Term">Second Term</option>
-                            <option value="Third Term" selected>Third Term</option>
-                        </select>
-                    </div>
-                </div>
-                <button type="submit" class="w-full bg-red-700 hover:bg-red-800 text-white font-bold py-2.5 sm:py-3 rounded-lg shadow-md transition text-sm flex items-center justify-center gap-2">
-                    <i class="fa-solid fa-file-invoice"></i> Search & View Result Sheet
-                </button>
-            </form>
-
-            <!-- Search Archive Result Status / Match List -->
-            <div id="search-feedback" class="mt-4 text-xs font-semibold text-center"></div>
-        </div>
-    </section>
-
-    <!-- ADMIN PANEL SECTION -->
-    <section id="admin-section" class="hidden">
-        <!-- Password Auth Login -->
-        <div id="admin-login-card" class="bg-white rounded-xl shadow-md p-4 sm:p-6 max-w-md mx-auto border-t-4 border-red-800">
-            <h2 class="text-xl sm:text-2xl font-bold text-red-800 mb-2 flex items-center gap-2">
-                <i class="fa-solid fa-lock"></i> Admin Authentication
-            </h2>
-            <p class="text-slate-600 text-xs sm:text-sm mb-4">Enter master administrative key to access result editor.</p>
-            
-            <form onsubmit="handleAdminLogin(event)" class="space-y-4">
-                <div>
-                    <label class="block text-xs sm:text-sm font-semibold text-slate-700 mb-1">Password</label>
-                    <input type="password" id="admin-pass" required placeholder="Enter password" class="w-full px-3 py-2 sm:px-4 sm:py-2.5 border rounded-lg text-sm focus:ring-2 focus:ring-red-600 focus:outline-none">
-                </div>
-                <button type="submit" class="w-full bg-red-800 hover:bg-red-900 text-white font-bold py-2.5 rounded-lg transition text-sm">Login to Control Panel</button>
-            </form>
-        </div>
-
-        <!-- Admin Control Panel -->
-        <div id="admin-dashboard" class="hidden space-y-6">
-            <div class="flex flex-col sm:flex-row justify-between items-start sm:items-center bg-white p-4 rounded-xl shadow border-l-4 border-red-800 gap-3">
-                <div>
-                    <h2 class="text-lg sm:text-xl font-bold text-slate-800"><i class="fa-solid fa-table-cells text-red-800 mr-2"></i>Termly Result Upload & Archive Manager</h2>
-                    <p class="text-[11px] sm:text-xs text-slate-500">Publish or update results with precise upload date, year, and time logging.</p>
-                </div>
-                <div class="flex gap-2 w-full sm:w-auto">
-                    <button onclick="saveAndPublishResult()" class="flex-1 sm:flex-none bg-green-700 hover:bg-green-800 text-white text-xs font-bold px-3 py-2 rounded-lg shadow flex items-center justify-center gap-1">
-                        <i class="fa-solid fa-cloud-arrow-up"></i> Save & Archive Result
-                    </button>
-                    <button onclick="logoutAdmin()" class="bg-red-100 text-red-800 text-xs font-bold px-3 py-2 rounded-lg hover:bg-red-200">
-                        <i class="fa-solid fa-right-from-bracket mr-1"></i> Lock
-                    </button>
+                    <h1 class="text-base sm:text-xl md:text-2xl font-bold tracking-wide">SUPREME LORD'S DELIGHT INTERNATIONAL SCHOOL</h1>
+                    <p class="text-[10px] sm:text-xs text-red-200">ORORO • ABUJA — STUDENT RESULT ARCHIVE PORTAL</p>
                 </div>
             </div>
-
-            <!-- EDITABLE SPREADSHEET FORM -->
-            <div class="bg-white p-3 sm:p-6 rounded-xl shadow-xl max-w-5xl mx-auto border border-slate-300 overflow-x-auto">
-                <div class="border-2 border-slate-800 p-3 sm:p-4 min-w-[750px]">
-                    
-                    <!-- Header -->
-                    <div class="flex items-center justify-between border-b-2 border-slate-800 pb-3 mb-3">
-                        <img src="logo.png" alt="School Crest" class="h-12 w-12 sm:h-16 sm:w-16 object-contain" onerror="this.src='https://via.placeholder.com/80?text=CREST'">
-                        <div class="text-center flex-grow px-2">
-                            <h2 class="text-sm sm:text-lg md:text-xl font-black text-slate-900 tracking-tight uppercase">SUPREME LORD'S DELIGHT INTERNATIONAL SCHOOL</h2>
-                            <p class="text-[10px] sm:text-[11px] font-bold text-slate-700">ORORO, JIKWOYI PHASE II, ABUJA-FCT.</p>
-                            <h3 class="text-xs sm:text-md font-black underline tracking-wider text-red-900 uppercase">TERMLY ACADEMIC REPORT UPLOAD SHEET</h3>
-                        </div>
-                        <div class="text-right text-xs font-bold">
-                            <div>ADM NO: <input type="text" id="edit-adm" value="319" class="w-16 sm:w-20 border border-slate-400 p-1 text-xs rounded"></div>
-                        </div>
+            <nav class="flex gap-2 w-full sm:w-auto justify-center">
+                <button onclick="switchTab('student')" id="nav-student" class="flex-1 sm:flex-none px-3 py-1.5 sm:px-4 sm:py-2 text-xs sm:text-sm font-semibold rounded-lg bg-red-900 text-white shadow">
+                    <i class="fa-solid fa-graduation-cap mr-1 sm:mr-2"></i>Student Portal
+                </button>
+                <button onclick="switchTab('admin')" id="nav-admin" class="flex-1 sm:flex-none px-3 py-1.5 sm:px-4 sm:py-2 text-xs sm:text-sm font-semibold rounded-lg bg-red-700 hover:bg-red-900 text-white transition">
+                    <i class="fa-solid fa-user-shield mr-1 sm:mr-2"></i>Admin Login
+                </button>
+            </nav>
+        </div>
+    </header>
+    <!-- MAIN CONTAINER -->
+    <main class="flex-grow max-w-7xl w-full mx-auto p-3 sm:p-6">
+        <!-- STUDENT PORTAL SECTION -->
+        <section id="student-section" class="block">
+            <div class="bg-white rounded-xl shadow-md p-4 sm:p-6 max-w-2xl mx-auto border-t-4 border-red-700">
+                <h2 class="text-xl sm:text-2xl font-bold text-red-800 mb-2 flex items-center gap-2">
+                    <i class="fa-solid fa-magnifying-glass"></i> Check Student Academic Report
+                </h2>
+                <p class="text-slate-600 text-xs sm:text-sm mb-4 sm:mb-6">Enter Student Name, Class Level, and Academic Term to access records.</p>
+                
+                <form id="result-search-form" onsubmit="handleResultSearch(event)" class="space-y-4">
+                    <div>
+                        <label class="block text-xs sm:text-sm font-semibold text-slate-700 mb-1">Student Full Name</label>
+                        <input type="text" id="search-name" required placeholder="e.g. Lord Terna" class="w-full px-3 py-2 sm:px-4 sm:py-2.5 border rounded-lg text-sm focus:ring-2 focus:ring-red-600 focus:outline-none">
                     </div>
-
-                    <!-- Editable Metadata Grid -->
-                    <div class="text-xs font-semibold grid grid-cols-2 sm:grid-cols-4 gap-2 sm:gap-3 border-b-2 border-slate-800 pb-3 mb-4 bg-slate-50 p-2 rounded">
-                        <div>Student Name: <input type="text" id="edit-name" value="Lord Terna" class="w-full border p-1 rounded font-bold text-slate-900 text-xs"></div>
-                        <div>Class Level: 
-                            <select id="edit-class" class="w-full border p-1 rounded text-xs">
+                    <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                        <div>
+                            <label class="block text-xs sm:text-sm font-semibold text-slate-700 mb-1">Class Level</label>
+                            <select id="search-class" required class="w-full px-3 py-2 sm:px-4 sm:py-2.5 border rounded-lg text-sm focus:ring-2 focus:ring-red-600 focus:outline-none">
+                                <option value="">Select Class</option>
                                 <option value="JSS 1">JSS 1</option>
                                 <option value="JSS 2">JSS 2</option>
                                 <option value="JSS 3" selected>JSS 3</option>
@@ -110,269 +58,346 @@
                                 <option value="SS 3">SS 3</option>
                             </select>
                         </div>
-                        <div>Year/Session: <input type="text" id="edit-year" value="2024/2025" class="w-full border p-1 rounded text-xs"></div>
-                        <div>Academic Term: 
-                            <select id="edit-term" class="w-full border p-1 rounded text-xs font-bold text-red-800">
+                        <div>
+                            <label class="block text-xs sm:text-sm font-semibold text-slate-700 mb-1">Academic Term</label>
+                            <select id="search-term" required class="w-full px-3 py-2 sm:px-4 sm:py-2.5 border rounded-lg text-sm focus:ring-2 focus:ring-red-600 focus:outline-none">
                                 <option value="First Term">First Term</option>
                                 <option value="Second Term">Second Term</option>
                                 <option value="Third Term" selected>Third Term</option>
                             </select>
                         </div>
-                        <div>Age: <input type="text" id="edit-age" value="13" class="w-full border p-1 rounded text-xs"></div>
-                        <div>Avg Class Age: <input type="text" id="edit-avg-age" value="13" class="w-full border p-1 rounded text-xs"></div>
-                        <div>No In Class: <input type="text" id="edit-no-class" value="38" class="w-full border p-1 rounded text-xs"></div>
-                        <div>Attendance: <input type="text" id="edit-attendance" value="110 / 118" class="w-full border p-1 rounded text-xs"></div>
-                        <div>Avg Score: <input type="text" id="edit-avg-score" value="73.1" class="w-full border p-1 rounded text-xs"></div>
-                        <div>Position/Grade: <input type="text" id="edit-position" value="1st / A" class="w-full border p-1 rounded text-xs"></div>
-                        <div>Pass/Fail: <input type="text" id="edit-status" value="PASS" class="w-full border p-1 rounded text-xs"></div>
-                        <div>Resumption Date: <input type="text" id="edit-resumption" value="07/09/2025" class="w-full border p-1 rounded text-xs"></div>
                     </div>
+                    <button type="submit" class="w-full bg-red-700 hover:bg-red-800 text-white font-bold py-2.5 sm:py-3 rounded-lg shadow-md transition text-sm flex items-center justify-center gap-2">
+                        <i class="fa-solid fa-file-invoice"></i> Search & View Result Sheet
+                    </button>
+                </form>
 
-                    <!-- Editable Subject Table -->
-                    <div class="overflow-x-auto mb-2">
-                        <table class="w-full text-left text-xs border-collapse border border-slate-800">
-                            <thead>
-                                <tr class="bg-slate-200 text-center font-bold text-[10px] sm:text-[11px] uppercase border-b border-slate-800">
-                                    <th class="p-1 border border-slate-800 text-left w-1/4">SUBJECTS</th>
-                                    <th class="p-1 border border-slate-800">1ST</th>
-                                    <th class="p-1 border border-slate-800">2ND</th>
-                                    <th class="p-1 border border-slate-800">3RD</th>
-                                    <th class="p-1 border border-slate-800">4TH</th>
-                                    <th class="p-1 border border-slate-800">EXAM</th>
-                                    <th class="p-1 border border-slate-800 bg-slate-300 font-extrabold">TOTAL</th>
-                                    <th class="p-1 border border-slate-800">AVG</th>
-                                    <th class="p-1 border border-slate-800">HIGH</th>
-                                    <th class="p-1 border border-slate-800">LOW</th>
-                                    <th class="p-1 border border-slate-800">POS</th>
-                                    <th class="p-1 border border-slate-800 text-left">REMARK</th>
-                                </tr>
-                            </thead>
-                            <tbody id="edit-scores-body" class="divide-y divide-slate-800 text-[11px]">
-                                <!-- Populated via JS -->
-                            </tbody>
-                        </table>
+                <!-- Search Archive Result Status / Match List -->
+                <div id="search-feedback" class="mt-4 text-xs font-semibold text-center"></div>
+            </div>
+        </section>
+        <!-- ADMIN PANEL SECTION -->
+        <section id="admin-section" class="hidden">
+            <!-- Password Auth Login -->
+            <div id="admin-login-card" class="bg-white rounded-xl shadow-md p-4 sm:p-6 max-w-md mx-auto border-t-4 border-red-800">
+                <h2 class="text-xl sm:text-2xl font-bold text-red-800 mb-2 flex items-center gap-2">
+                    <i class="fa-solid fa-lock"></i> Admin Authentication
+                </h2>
+                <p class="text-slate-600 text-xs sm:text-sm mb-4">Enter master administrative key to access result editor.</p>
+                
+                <form onsubmit="handleAdminLogin(event)" class="space-y-4">
+                    <div>
+                        <label class="block text-xs sm:text-sm font-semibold text-slate-700 mb-1">Password</label>
+                        <input type="password" id="admin-pass" required placeholder="Enter password" class="w-full px-3 py-2 sm:px-4 sm:py-2.5 border rounded-lg text-sm focus:ring-2 focus:ring-red-600 focus:outline-none">
                     </div>
-
-                    <!-- Mobile & Desktop Dedicated Add Row Action -->
-                    <div class="mb-4">
-                        <button type="button" onclick="addNewSubjectRow('')" class="w-full sm:w-auto bg-slate-800 hover:bg-slate-900 text-white font-bold px-4 py-2 rounded-lg text-xs flex items-center justify-center gap-2 shadow transition">
-                            <i class="fa-solid fa-plus"></i> Add New Subject Row
+                    <button type="submit" class="w-full bg-red-800 hover:bg-red-900 text-white font-bold py-2.5 rounded-lg transition text-sm">Login to Control Panel</button>
+                </form>
+            </div>
+            <!-- Admin Control Panel -->
+            <div id="admin-dashboard" class="hidden space-y-6">
+                <div class="flex flex-col sm:flex-row justify-between items-start sm:items-center bg-white p-4 rounded-xl shadow border-l-4 border-red-800 gap-3">
+                    <div>
+                        <h2 class="text-lg sm:text-xl font-bold text-slate-800"><i class="fa-solid fa-table-cells text-red-800 mr-2"></i>Termly Result Upload & Archive Manager</h2>
+                        <p class="text-[11px] sm:text-xs text-slate-500">Publish or update results with precise upload date, year, and time logging.</p>
+                    </div>
+                    <div class="flex gap-2 w-full sm:w-auto">
+                        <button onclick="saveAndPublishResult()" class="flex-1 sm:flex-none bg-green-700 hover:bg-green-800 text-white text-xs font-bold px-3 py-2 rounded-lg shadow flex items-center justify-center gap-1">
+                            <i class="fa-solid fa-cloud-arrow-up"></i> Save & Archive Result
+                        </button>
+                        <button onclick="logoutAdmin()" class="bg-red-100 text-red-800 text-xs font-bold px-3 py-2 rounded-lg hover:bg-red-200">
+                            <i class="fa-solid fa-right-from-bracket mr-1"></i> Lock
                         </button>
                     </div>
-
-                    <!-- Remarks -->
-                    <div class="border border-slate-800 p-3 space-y-2 text-xs">
-                        <div><span class="font-bold">Counselor's Remark:</span> <input type="text" id="edit-counselor-remark" value="The sky is your limit, keep the flag flying." class="w-full sm:w-4/5 border p-1 rounded text-xs"></div>
-                        <div><span class="font-bold">House Master's Remark:</span> <input type="text" id="edit-house-remark" value="He is a very good and obedient student." class="w-full sm:w-4/5 border p-1 rounded text-xs"></div>
-                        <div><span class="font-bold">Form Master's Remark:</span> <input type="text" id="edit-form-remark" value="He is hardworking and focused." class="w-full sm:w-4/5 border p-1 rounded text-xs"></div>
-                        <div><span class="font-bold">Principal's Remark:</span> <input type="text" id="edit-principal-remark" value="An excellent result." class="w-full sm:w-4/5 border p-1 rounded text-xs"></div>
+                </div>
+                <!-- EDITABLE SPREADSHEET FORM -->
+                <div class="bg-white p-3 sm:p-6 rounded-xl shadow-xl max-w-5xl mx-auto border border-slate-300 overflow-x-auto">
+                    <div class="border-2 border-slate-800 p-3 sm:p-4 min-w-[750px]">
+                        
+                        <!-- Header -->
+                        <div class="flex items-center justify-between border-b-2 border-slate-800 pb-3 mb-3">
+                            <img src="logo.png" alt="School Crest" class="h-12 w-12 sm:h-16 sm:w-16 object-contain" onerror="this.src='https://via.placeholder.com/80?text=CREST'">
+                            <div class="text-center flex-grow px-2">
+                                <h2 class="text-sm sm:text-lg md:text-xl font-black text-slate-900 tracking-tight uppercase">SUPREME LORD'S DELIGHT INTERNATIONAL SCHOOL</h2>
+                                <p class="text-[10px] sm:text-[11px] font-bold text-slate-700">ORORO, JIKWOYI PHASE II, ABUJA-FCT.</p>
+                                <h3 class="text-xs sm:text-md font-black underline tracking-wider text-red-900 uppercase">TERMLY ACADEMIC REPORT UPLOAD SHEET</h3>
+                            </div>
+                            <div class="text-right text-xs font-bold">
+                                <div>ADM NO: <input type="text" id="edit-adm" value="319" class="w-16 sm:w-20 border border-slate-400 p-1 text-xs rounded"></div>
+                            </div>
+                        </div>
+                        <!-- Editable Metadata Grid -->
+                        <div class="text-xs font-semibold grid grid-cols-2 sm:grid-cols-4 gap-2 sm:gap-3 border-b-2 border-slate-800 pb-3 mb-4 bg-slate-50 p-2 rounded">
+                            <div>Student Name: <input type="text" id="edit-name" value="Lord Terna" class="w-full border p-1 rounded font-bold text-slate-900 text-xs"></div>
+                            <div>Class Level: 
+                                <select id="edit-class" class="w-full border p-1 rounded text-xs">
+                                    <option value="JSS 1">JSS 1</option>
+                                    <option value="JSS 2">JSS 2</option>
+                                    <option value="JSS 3" selected>JSS 3</option>
+                                    <option value="SS 1">SS 1</option>
+                                    <option value="SS 2">SS 2</option>
+                                    <option value="SS 3">SS 3</option>
+                                </select>
+                            </div>
+                            <div>Year/Session: <input type="text" id="edit-year" value="2024/2025" class="w-full border p-1 rounded text-xs"></div>
+                            <div>Academic Term: 
+                                <select id="edit-term" class="w-full border p-1 rounded text-xs font-bold text-red-800">
+                                    <option value="First Term">First Term</option>
+                                    <option value="Second Term">Second Term</option>
+                                    <option value="Third Term" selected>Third Term</option>
+                                </select>
+                            </div>
+                            <div>Age: <input type="text" id="edit-age" value="13" class="w-full border p-1 rounded text-xs"></div>
+                            <div>Avg Class Age: <input type="text" id="edit-avg-age" value="13" class="w-full border p-1 rounded text-xs"></div>
+                            <div>No In Class: <input type="text" id="edit-no-class" value="38" class="w-full border p-1 rounded text-xs"></div>
+                            <div>Attendance: <input type="text" id="edit-attendance" value="110 / 118" class="w-full border p-1 rounded text-xs"></div>
+                            <div>Avg Score: <input type="text" id="edit-avg-score" value="73.1" class="w-full border p-1 rounded text-xs"></div>
+                            <div>Position/Grade: <input type="text" id="edit-position" value="1st / A" class="w-full border p-1 rounded text-xs"></div>
+                            <div>Pass/Fail: <input type="text" id="edit-status" value="PASS" class="w-full border p-1 rounded text-xs"></div>
+                            <div>Resumption Date: <input type="text" id="edit-resumption" value="07/09/2025" class="w-full border p-1 rounded text-xs"></div>
+                        </div>
+                        <!-- Editable Subject Table -->
+                        <div class="overflow-x-auto mb-4">
+                            <table class="w-full text-left text-xs border-collapse border border-slate-800">
+                                <thead>
+                                    <tr class="bg-slate-200 text-center font-bold text-[10px] sm:text-[11px] uppercase border-b border-slate-800">
+                                        <th class="p-1 border border-slate-800 text-left w-1/4"><input type="text" value="SUBJECTS" class="w-full bg-transparent font-bold text-center border-0" readonly></th>
+                                        <th class="p-1 border border-slate-800"><input type="text" value="1ST" class="w-full bg-transparent font-bold text-center border-0" readonly></th>
+                                        <th class="p-1 border border-slate-800"><input type="text" value="2ND" class="w-full bg-transparent font-bold text-center border-0" readonly></th>
+                                        <th class="p-1 border border-slate-800"><input type="text" value="3RD" class="w-full bg-transparent font-bold text-center border-0" readonly></th>
+                                        <th class="p-1 border border-slate-800"><input type="text" value="4TH" class="w-full bg-transparent font-bold text-center border-0" readonly></th>
+                                        <th class="p-1 border border-slate-800"><input type="text" value="EXAM" class="w-full bg-transparent font-bold text-center border-0" readonly></th>
+                                        <th class="p-1 border border-slate-800 bg-slate-300 font-extrabold"><input type="text" value="TOTAL" class="w-full bg-transparent font-bold text-center border-0" readonly></th>
+                                        <th class="p-1 border border-slate-800"><input type="text" value="AVG" class="w-full bg-transparent font-bold text-center border-0" readonly></th>
+                                        <th class="p-1 border border-slate-800"><input type="text" value="HIGH" class="w-full bg-transparent font-bold text-center border-0" readonly></th>
+                                        <th class="p-1 border border-slate-800"><input type="text" value="LOW" class="w-full bg-transparent font-bold text-center border-0" readonly></th>
+                                        <th class="p-1 border border-slate-800"><input type="text" value="POS" class="w-full bg-transparent font-bold text-center border-0" readonly></th>
+                                        <th class="p-1 border border-slate-800 text-left"><input type="text" value="REMARK" class="w-full bg-transparent font-bold text-center border-0" readonly></th>
+                                    </tr>
+                                </thead>
+                                <tbody id="edit-scores-body" class="divide-y divide-slate-800 text-[11px]">
+                                    <!-- Populated via JS -->
+                                </tbody>
+                            </table>
+                        </div>
+                        <!-- Mobile & Desktop Manual Add Row Button -->
+                        <div class="mb-4">
+                            <button type="button" onclick="addNewSubjectRow('')" class="w-full sm:w-auto bg-slate-800 hover:bg-slate-900 text-white font-bold px-4 py-2 rounded-lg text-xs flex items-center justify-center gap-2 shadow">
+                                <i class="fa-solid fa-plus"></i> Add New Subject Row
+                            </button>
+                        </div>
+                        <!-- Remarks -->
+                        <div class="border border-slate-800 p-3 space-y-2 text-xs">
+                            <div><span class="font-bold">Counselor's Remark:</span> <input type="text" id="edit-counselor-remark" value="The sky is your limit, keep the flag flying." class="w-full sm:w-4/5 border p-1 rounded text-xs"></div>
+                            <div><span class="font-bold">House Master's Remark:</span> <input type="text" id="edit-house-remark" value="He is a very good and obedient student." class="w-full sm:w-4/5 border p-1 rounded text-xs"></div>
+                            <div><span class="font-bold">Form Master's Remark:</span> <input type="text" id="edit-form-remark" value="He is hardworking and focused." class="w-full sm:w-4/5 border p-1 rounded text-xs"></div>
+                            <div><span class="font-bold">Principal's Remark:</span> <input type="text" id="edit-principal-remark" value="An excellent result." class="w-full sm:w-4/5 border p-1 rounded text-xs"></div>
+                        </div>
                     </div>
                 </div>
             </div>
-        </div>
-    </section>
-</main>
+        </section>
+    </main>
+    <!-- JavaScript Logic -->
+    <script>
+        const initialSubjects = [
+    "Mathematics", "English Language", "Hausa", "Integrated Science", "Social Studies", 
+    "Physical Education", "Introductory Technology", "Home Economics", "Business Studies", "French", "Computer Studies"
+];
 
-<!-- JavaScript Logic -->
-<script>
-    const initialSubjects = [
-        "Mathematics", "English Language", "Hausa", "Integrated Science", "Social Studies", 
-        "Physical Education", "Introductory Technology", "Home Economics", "Business Studies", "French", "Computer Studies"
-    ];
-
-    function switchTab(tab) {
-        if (tab === 'student') {
-            document.getElementById('student-section').classList.remove('hidden');
-            document.getElementById('admin-section').classList.add('hidden');
-            document.getElementById('nav-student').classList.replace('bg-red-700', 'bg-red-900');
-            document.getElementById('nav-admin').classList.replace('bg-red-900', 'bg-red-700');
-        } else {
-            document.getElementById('student-section').classList.add('hidden');
-            document.getElementById('admin-section').classList.remove('hidden');
-            document.getElementById('nav-admin').classList.replace('bg-red-700', 'bg-red-900');
-            document.getElementById('nav-student').classList.replace('bg-red-900', 'bg-red-700');
-            if (document.querySelectorAll('.subject-row').length === 0) {
-                renderAdminSpreadsheet();
-            }
-        }
-    }
-
-    function renderAdminSpreadsheet() {
-        const tbody = document.getElementById('edit-scores-body');
-        tbody.innerHTML = "";
-        initialSubjects.forEach((sub) => {
-            addNewSubjectRow(sub);
-        });
-    }
-
-    // Function to add a single subject row
-    function addNewSubjectRow(subjectName = "") {
-        const tbody = document.getElementById('edit-scores-body');
-        const tr = document.createElement('tr');
-        tr.className = 'subject-row';
-        
-        tr.innerHTML = `
-            <td class="p-1 border border-slate-800"><input type="text" value="${subjectName}" placeholder="Subject Name" class="w-full font-bold sub-name border-0 text-xs"></td>
-            <td class="p-1 border border-slate-800"><input type="number" value="0" oninput="calcRowTotal(this)" class="w-9 text-center sub-t1 border-0 text-xs"></td>
-            <td class="p-1 border border-slate-800"><input type="number" value="0" oninput="calcRowTotal(this)" class="w-9 text-center sub-t2 border-0 text-xs"></td>
-            <td class="p-1 border border-slate-800"><input type="number" value="0" oninput="calcRowTotal(this)" class="w-9 text-center sub-t3 border-0 text-xs"></td>
-            <td class="p-1 border border-slate-800"><input type="number" value="0" oninput="calcRowTotal(this)" class="w-9 text-center sub-t4 border-0 text-xs"></td>
-            <td class="p-1 border border-slate-800"><input type="number" value="0" oninput="calcRowTotal(this)" class="w-9 text-center sub-exam border-0 text-xs"></td>
-            <td class="p-1 border border-slate-800 bg-slate-100 font-bold text-center"><span class="sub-total text-xs">0</span></td>
-            <td class="p-1 border border-slate-800"><input type="text" value="0" class="w-10 text-center sub-avg border-0 text-xs"></td>
-            <td class="p-1 border border-slate-800"><input type="text" value="0" class="w-10 text-center sub-high border-0 text-xs"></td>
-            <td class="p-1 border border-slate-800"><input type="text" value="0" class="w-10 text-center sub-low border-0 text-xs"></td>
-            <td class="p-1 border border-slate-800"><input type="text" value="-" class="w-10 text-center sub-pos border-0 text-xs"></td>
-            <td class="p-1 border border-slate-800"><input type="text" value="" placeholder="Remark" onkeydown="handleTabKey(event, this)" class="w-full sub-remark border-0 text-xs"></td>
-        `;
-        
-        tbody.appendChild(tr);
-    }
-
-    // Keydown listener to detect pressing TAB or ENTER on the last cell (Remark field)
-    function handleTabKey(event, inputElement) {
-        if ((event.key === 'Tab' && !event.shiftKey) || event.key === 'Enter') {
-            const row = inputElement.closest('tr');
-            const isLastRow = !row.nextElementSibling;
-            
-            if (isLastRow) {
-                event.preventDefault(); // Prevent focus jumping or default form submits
-                addNewSubjectRow(""); // Add a new blank row
-                
-                // Move focus to the subject input of the newly created row
-                const newRow = document.getElementById('edit-scores-body').lastElementChild;
-                const newSubjectInput = newRow.querySelector('.sub-name');
-                if (newSubjectInput) {
-                    newSubjectInput.focus();
-                }
-            }
-        }
-    }
-
-    function calcRowTotal(input) {
-        const row = input.closest('tr');
-        const t1 = parseFloat(row.querySelector('.sub-t1').value) || 0;
-        const t2 = parseFloat(row.querySelector('.sub-t2').value) || 0;
-        const t3 = parseFloat(row.querySelector('.sub-t3').value) || 0;
-        const t4 = parseFloat(row.querySelector('.sub-t4').value) || 0;
-        const exam = parseFloat(row.querySelector('.sub-exam').value) || 0;
-        row.querySelector('.sub-total').innerText = t1 + t2 + t3 + t4 + exam;
-    }
-
-    // Student Portal Search matching Name, Class Level, and Term
-    function handleResultSearch(e) {
-        e.preventDefault();
-        const searchName = document.getElementById('search-name').value.trim().toLowerCase();
-        const searchClass = document.getElementById('search-class').value;
-        const searchTerm = document.getElementById('search-term').value;
-        const feedback = document.getElementById('search-feedback');
-        const allArchives = JSON.parse(localStorage.getItem('studentResultArchives')) || [];
-        
-        // Find match checking name, class, and term precisely
-        const matchedRecord = allArchives.find(item => 
-            item.name.toLowerCase() === searchName && 
-            item.class === searchClass && 
-            item.term === searchTerm
-        );
-
-        if (matchedRecord) {
-            feedback.innerHTML = `<span class="text-green-700">Record found! Opening report card...</span>`;
-            sessionStorage.setItem('activeReport', JSON.stringify(matchedRecord));
-            setTimeout(() => {
-                window.open('result.html', '_blank');
-                feedback.innerHTML = "";
-            }, 500);
-        } else {
-            feedback.innerHTML = `<span class="text-red-600">No matching record found for "${searchName}" in ${searchClass} for ${searchTerm}. Please check your details or contact admin.</span>`;
-        }
-    }
-
-    function handleAdminLogin(e) {
-        e.preventDefault();
-        const pass = document.getElementById('admin-pass').value;
-        if (pass === 'delight') {
-            document.getElementById('admin-login-card').classList.add('hidden');
-            document.getElementById('admin-dashboard').classList.remove('hidden');
+function switchTab(tab) {
+    if (tab === 'student') {
+        document.getElementById('student-section').classList.remove('hidden');
+        document.getElementById('admin-section').classList.add('hidden');
+        document.getElementById('nav-student').classList.replace('bg-red-700', 'bg-red-900');
+        document.getElementById('nav-admin').classList.replace('bg-red-900', 'bg-red-700');
+    } else {
+        document.getElementById('student-section').classList.add('hidden');
+        document.getElementById('admin-section').classList.remove('hidden');
+        document.getElementById('nav-admin').classList.replace('bg-red-700', 'bg-red-900');
+        document.getElementById('nav-student').classList.replace('bg-red-900', 'bg-red-700');
+        if (document.querySelectorAll('.subject-row').length === 0) {
             renderAdminSpreadsheet();
-        } else {
-            alert('Access Denied: Invalid Administrative Password.');
+        }
+    }
+}
+
+function renderAdminSpreadsheet() {
+    const tbody = document.getElementById('edit-scores-body');
+    tbody.innerHTML = "";
+    initialSubjects.forEach((sub) => {
+        addNewSubjectRow(sub);
+    });
+}
+
+// Function to add a single subject row
+function addNewSubjectRow(subjectName = "") {
+    const tbody = document.getElementById('edit-scores-body');
+    const tr = document.createElement('tr');
+    tr.className = 'subject-row';
+    
+    tr.innerHTML = `
+        <td class="p-1 border border-slate-800"><input type="text" value="${subjectName}" placeholder="Subject Name" class="w-full font-bold sub-name border-0 text-xs"></td>
+        <td class="p-1 border border-slate-800"><input type="number" value="0" onchange="calcRowTotal(this)" class="w-9 text-center sub-t1 border-0 text-xs"></td>
+        <td class="p-1 border border-slate-800"><input type="number" value="0" onchange="calcRowTotal(this)" class="w-9 text-center sub-t2 border-0 text-xs"></td>
+        <td class="p-1 border border-slate-800"><input type="number" value="0" onchange="calcRowTotal(this)" class="w-9 text-center sub-t3 border-0 text-xs"></td>
+        <td class="p-1 border border-slate-800"><input type="number" value="0" onchange="calcRowTotal(this)" class="w-9 text-center sub-t4 border-0 text-xs"></td>
+        <td class="p-1 border border-slate-800"><input type="number" value="0" onchange="calcRowTotal(this)" class="w-9 text-center sub-exam border-0 text-xs"></td>
+        <td class="p-1 border border-slate-800 bg-slate-100 font-bold text-center"><span class="sub-total text-xs">0</span></td>
+        <td class="p-1 border border-slate-800"><input type="text" value="0" class="w-10 text-center sub-avg border-0 text-xs"></td>
+        <td class="p-1 border border-slate-800"><input type="text" value="0" class="w-10 text-center sub-high border-0 text-xs"></td>
+        <td class="p-1 border border-slate-800"><input type="text" value="0" class="w-10 text-center sub-low border-0 text-xs"></td>
+        <td class="p-1 border border-slate-800"><input type="text" value="-" class="w-10 text-center sub-pos border-0 text-xs"></td>
+        <td class="p-1 border border-slate-800"><input type="text" value="" placeholder="Remark" onkeydown="handleTabKey(event, this)" class="w-full sub-remark border-0 text-xs"></td>
+    `;
+    
+    tbody.appendChild(tr);
+}
+// Keydown listener to detect pressing TAB or ENTER on the last cell (Remark field)
+function handleTabKey(event, inputElement) {
+    if ((event.key === 'Tab' && !event.shiftKey) || event.key === 'Enter') {
+        const row = inputElement.closest('tr');
+        const isLastRow = !row.nextElementSibling;
+        
+        if (isLastRow) {
+            event.preventDefault(); // Prevent form submission or jumping
+            addNewSubjectRow(""); // Add a new blank row
+            
+            // Move focus to the subject input of the newly created row
+            const newRow = document.getElementById('edit-scores-body').lastElementChild;
+            const newSubjectInput = newRow.querySelector('.sub-name');
+            if (newSubjectInput) {
+                newSubjectInput.focus();
+            }
+        }
+    }
+}
+
+function calcRowTotal(input) {
+    const row = input.closest('tr');
+    const t1 = parseFloat(row.querySelector('.sub-t1').value) || 0;
+    const t2 = parseFloat(row.querySelector('.sub-t2').value) || 0;
+    const t3 = parseFloat(row.querySelector('.sub-t3').value) || 0;
+    const t4 = parseFloat(row.querySelector('.sub-t4').value) || 0;
+    const exam = parseFloat(row.querySelector('.sub-exam').value) || 0;
+    row.querySelector('.sub-total').innerText = t1 + t2 + t3 + t4 + exam;
+}
+
+        // Student Portal Search matching Name, Class Level, and Term
+        function handleResultSearch(e) {
+            e.preventDefault();
+            const searchName = document.getElementById('search-name').value.trim().toLowerCase();
+            const searchClass = document.getElementById('search-class').value;
+            const searchTerm = document.getElementById('search-term').value;
+            const feedback = document.getElementById('search-feedback');
+
+            const allArchives = JSON.parse(localStorage.getItem('studentResultArchives')) || [];
+
+            // Find match checking name, class, and term precisely
+            const matchedRecord = allArchives.find(item => 
+                item.name.toLowerCase() === searchName && 
+                item.class === searchClass && 
+                item.term === searchTerm
+            );
+
+            if (matchedRecord) {
+                feedback.innerHTML = `<span class="text-green-700">Record found! Opening report card...</span>`;
+                sessionStorage.setItem('activeReport', JSON.stringify(matchedRecord));
+                setTimeout(() => {
+                    window.open('result.html', '_blank');
+                    feedback.innerHTML = "";
+                }, 500);
+            } else {
+                feedback.innerHTML = `<span class="text-red-600">No matching record found for "${searchName}" in ${searchClass} for ${searchTerm}. Please check your details or contact admin.</span>`;
+            }
+        }
+
+        function handleAdminLogin(e) {
+            e.preventDefault();
+            const pass = document.getElementById('admin-pass').value;
+            if (pass === 'delight') {
+                document.getElementById('admin-login-card').classList.add('hidden');
+                document.getElementById('admin-dashboard').classList.remove('hidden');
+                renderAdminSpreadsheet();
+            } else {
+                alert('Access Denied: Invalid Administrative Password.');
+                document.getElementById('admin-pass').value = "";
+            }
+        }
+        function logoutAdmin() {
+            document.getElementById('admin-dashboard').classList.add('hidden');
+            document.getElementById('admin-login-card').classList.remove('hidden');
             document.getElementById('admin-pass').value = "";
         }
-    }
 
-    function logoutAdmin() {
-        document.getElementById('admin-dashboard').classList.add('hidden');
-        document.getElementById('admin-login-card').classList.remove('hidden');
-        document.getElementById('admin-pass').value = "";
-    }
+        // Save & Archive result with exact Date, Year, and Time Stamp
+        function saveAndPublishResult() {
+            const now = new Date();
+            const dateStr = now.toLocaleDateString();
+            const timeStr = now.toLocaleTimeString();
+            const timestamp = `${dateStr} at ${timeStr}`;
 
-    // Save & Archive result with exact Date, Year, and Time Stamp
-    function saveAndPublishResult() {
-        const now = new Date();
-        const dateStr = now.toLocaleDateString();
-        const timeStr = now.toLocaleTimeString();
-        const timestamp = `${dateStr} at ${timeStr}`;
+            const studentRecord = {
+                admNo: document.getElementById('edit-adm').value,
+                name: document.getElementById('edit-name').value.trim(),
+                class: document.getElementById('edit-class').value,
+                year: document.getElementById('edit-year').value,
+                term: document.getElementById('edit-term').value,
+                age: document.getElementById('edit-age').value,
+                avgAge: document.getElementById('edit-avg-age').value,
+                noInClass: document.getElementById('edit-no-class').value,
+                attendance: document.getElementById('edit-attendance').value,
+                avgScore: document.getElementById('edit-avg-score').value,
+                position: document.getElementById('edit-position').value,
+                status: document.getElementById('edit-status').value,
+                resumption: document.getElementById('edit-resumption').value,
+                counselorRemark: document.getElementById('edit-counselor-remark').value,
+                houseRemark: document.getElementById('edit-house-remark').value,
+                formRemark: document.getElementById('edit-form-remark').value,
+                principalRemark: document.getElementById('edit-principal-remark').value,
+                uploadTimestamp: timestamp,
+                scores: []
+            };
 
-        const studentRecord = {
-            admNo: document.getElementById('edit-adm').value,
-            name: document.getElementById('edit-name').value.trim(),
-            class: document.getElementById('edit-class').value,
-            year: document.getElementById('edit-year').value,
-            term: document.getElementById('edit-term').value,
-            age: document.getElementById('edit-age').value,
-            avgAge: document.getElementById('edit-avg-age').value,
-            noInClass: document.getElementById('edit-no-class').value,
-            attendance: document.getElementById('edit-attendance').value,
-            avgScore: document.getElementById('edit-avg-score').value,
-            position: document.getElementById('edit-position').value,
-            status: document.getElementById('edit-status').value,
-            resumption: document.getElementById('edit-resumption').value,
-            counselorRemark: document.getElementById('edit-counselor-remark').value,
-            houseRemark: document.getElementById('edit-house-remark').value,
-            formRemark: document.getElementById('edit-form-remark').value,
-            principalRemark: document.getElementById('edit-principal-remark').value,
-            uploadTimestamp: timestamp,
-            scores: []
-        };
-
-        const rows = document.querySelectorAll('.subject-row');
-        rows.forEach(row => {
-            studentRecord.scores.push({
-                subject: row.querySelector('.sub-name').value,
-                t1: row.querySelector('.sub-t1').value,
-                t2: row.querySelector('.sub-t2').value,
-                t3: row.querySelector('.sub-t3').value,
-                t4: row.querySelector('.sub-t4').value,
-                exam: row.querySelector('.sub-exam').value,
-                total: row.querySelector('.sub-total').innerText,
-                avg: row.querySelector('.sub-avg').value,
-                high: row.querySelector('.sub-high').value,
-                low: row.querySelector('.sub-low').value,
-                pos: row.querySelector('.sub-pos').value,
-                remark: row.querySelector('.sub-remark').value
+            const rows = document.querySelectorAll('.subject-row');
+            rows.forEach(row => {
+                studentRecord.scores.push({
+                    subject: row.querySelector('.sub-name').value,
+                    t1: row.querySelector('.sub-t1').value,
+                    t2: row.querySelector('.sub-t2').value,
+                    t3: row.querySelector('.sub-t3').value,
+                    t4: row.querySelector('.sub-t4').value,
+                    exam: row.querySelector('.sub-exam').value,
+                    total: row.querySelector('.sub-total').innerText,
+                    avg: row.querySelector('.sub-avg').value,
+                    high: row.querySelector('.sub-high').value,
+                    low: row.querySelector('.sub-low').value,
+                    pos: row.querySelector('.sub-pos').value,
+                    remark: row.querySelector('.sub-remark').value
+                });
             });
-        });
 
-        let archives = JSON.parse(localStorage.getItem('studentResultArchives')) || [];
-        
-        // Check if record for this name, class, and term already exists to update it
-        const existingIndex = archives.findIndex(item => 
-            item.name.toLowerCase() === studentRecord.name.toLowerCase() && 
-            item.class === studentRecord.class &&
-            item.term === studentRecord.term && 
-            item.year === studentRecord.year
-        );
+            let archives = JSON.parse(localStorage.getItem('studentResultArchives')) || [];
+            
+            // Check if record for this name, class, and term already exists to update it
+            const existingIndex = archives.findIndex(item => 
+                item.name.toLowerCase() === studentRecord.name.toLowerCase() && 
+                item.class === studentRecord.class &&
+                item.term === studentRecord.term && 
+                item.year === studentRecord.year
+            );
 
-        if (existingIndex >= 0) {
-            archives[existingIndex] = studentRecord;
-        } else {
-            archives.push(studentRecord);
+            if (existingIndex >= 0) {
+                archives[existingIndex] = studentRecord;
+            } else {
+                archives.push(studentRecord);
+            }
+
+            localStorage.setItem('studentResultArchives', JSON.stringify(archives));
+            // Also store as legacy fallback
+            localStorage.setItem('publishedStudentResult', JSON.stringify(studentRecord));
+            
+            alert(`Success! Result for ${studentRecord.name} (${studentRecord.class} - ${studentRecord.term}) has been archived and published on ${timestamp}.`);
         }
-
-        localStorage.setItem('studentResultArchives', JSON.stringify(archives));
-        // Also store as legacy fallback
-        localStorage.setItem('publishedStudentResult', JSON.stringify(studentRecord));
-        
-        alert(`Success! Result for ${studentRecord.name} (${studentRecord.class} - ${studentRecord.term}) has been archived and published on ${timestamp}.`);
-    }
-</script>
+    </script>
+</body>
+</html>
