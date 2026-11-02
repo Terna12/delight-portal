@@ -153,6 +153,20 @@
                     </div>
                 </div>
 
+                <!-- NEW: SEARCH & RETRIEVE PUBLISHED RESULT BANNER -->
+                <div class="bg-amber-50 rounded-xl shadow p-4 border border-amber-300">
+                    <h3 class="font-bold text-amber-900 mb-1.5 text-xs sm:text-sm flex items-center gap-2 uppercase tracking-wider">
+                        <i class="fa-solid fa-pen-to-square"></i> Retrieve Published Result for Editing
+                    </h3>
+                    <p class="text-amber-800 text-xs mb-3">Search by student name to load existing published records into the spreadsheet for modifications.</p>
+                    <div class="flex flex-col sm:flex-row gap-2">
+                        <input type="text" id="admin-search-query" placeholder="Enter Student Name (e.g. Lord Terna)" class="flex-grow px-3 py-2 bg-white border border-amber-300 rounded-lg text-xs font-medium focus:ring-2 focus:ring-amber-500 focus:outline-none">
+                        <button onclick="loadStudentForEditing()" class="bg-amber-600 hover:bg-amber-700 text-white font-bold px-4 py-2 rounded-lg text-xs transition flex items-center justify-center gap-2 shadow">
+                            <i class="fa-solid fa-folder-open"></i> Load Result to Edit
+                        </button>
+                    </div>
+                </div>
+
                 <!-- EDITABLE SPREADSHEET FORM -->
                 <div class="bg-white p-3 sm:p-6 rounded-xl shadow-xl max-w-5xl mx-auto border border-slate-300">
                     <div class="border-2 border-slate-800 p-3 sm:p-4 w-full">
@@ -161,7 +175,7 @@
                             <img src="logo.png" alt="School Crest" class="h-10 w-10 sm:h-16 sm:w-16 object-contain flex-shrink-0" onerror="this.src='https://via.placeholder.com/80?text=CREST'">
                             <div class="text-center flex-grow px-1">
                                 <h2 class="text-xs sm:text-lg md:text-xl font-black text-slate-900 tracking-tight uppercase">SUPREME LORD'S DELIGHT INTERNATIONAL SCHOOL</h2>
-                                <p class="text-[9px] sm:text-[11px] font-bold text-slate-700">ORORO, JIKWOYI PHASE II, ABUJA-FCT.</p>
+                                <p class="text-[9px] sm:text-[11px] font-bold text-slate-700">CLOSE C MAITAMA OROZO.ABUJA-FCT.</p>
                                 <h3 class="text-[10px] sm:text-md font-black underline tracking-wider text-red-900 uppercase">TERMLY ACADEMIC REPORT UPLOAD SHEET</h3>
                             </div>
                             <div class="text-right text-[10px] sm:text-xs font-bold flex-shrink-0">
@@ -210,8 +224,8 @@
                                         <th class="p-1 border border-slate-800"><input type="text" value="2ND" class="w-full bg-transparent font-bold text-center border-0" readonly></th>
                                         <th class="p-1 border border-slate-800"><input type="text" value="3RD" class="w-full bg-transparent font-bold text-center border-0" readonly></th>
                                         <th class="p-1 border border-slate-800"><input type="text" value="4TH" class="w-full bg-transparent font-bold text-center border-0" readonly></th>
-                                        <th class="p-1 border border-slate-800"><input type="text" value="EXAM" class="w-full bg-transparent font-bold text-center border-0" readonly></th>
                                         <th class="p-1 border border-slate-800 bg-slate-300 font-extrabold"><input type="text" value="TOTAL" class="w-full bg-transparent font-bold text-center border-0" readonly></th>
+                                        <th class="p-1 border border-slate-800"><input type="text" value="EXAM" class="w-full bg-transparent font-bold text-center border-0" readonly></th>
                                         <th class="p-1 border border-slate-800"><input type="text" value="AVG" class="w-full bg-transparent font-bold text-center border-0" readonly></th>
                                         <th class="p-1 border border-slate-800"><input type="text" value="HIGH" class="w-full bg-transparent font-bold text-center border-0" readonly></th>
                                         <th class="p-1 border border-slate-800"><input type="text" value="LOW" class="w-full bg-transparent font-bold text-center border-0" readonly></th>
@@ -227,7 +241,7 @@
 
                         <!-- Mobile & Desktop Manual Add Row Button -->
                         <div class="mb-4">
-                            <button type="button" onclick="addNewSubjectRow('')" class="w-full sm:w-auto bg-slate-800 hover:bg-slate-900 text-white font-bold px-4 py-2 rounded-lg text-xs flex items-center justify-center gap-2 shadow">
+                            <button type="button" onclick="addNewSubjectRow('', 0, 0, 0, 0, 0, 0, 0, 0, '-', '')" class="w-full sm:w-auto bg-slate-800 hover:bg-slate-900 text-white font-bold px-4 py-2 rounded-lg text-xs flex items-center justify-center gap-2 shadow">
                                 <i class="fa-solid fa-plus"></i> Add New Subject Row
                             </button>
                         </div>
@@ -277,24 +291,26 @@
             });
         }
 
-        function addNewSubjectRow(subjectName = "") {
+        function addNewSubjectRow(subjectName = "", t1 = 0, t2 = 0, t3 = 0, t4 = 0, exam = 0, avg = 0, high = 0, low = 0, pos = "-", remark = "") {
             const tbody = document.getElementById('edit-scores-body');
             const tr = document.createElement('tr');
             tr.className = 'subject-row';
             
+            const total = (parseFloat(t1) || 0) + (parseFloat(t2) || 0) + (parseFloat(t3) || 0) + (parseFloat(t4) || 0) + (parseFloat(exam) || 0);
+
             tr.innerHTML = `
                 <td class="p-1 border border-slate-800"><input type="text" value="${subjectName}" placeholder="Subject Name" class="w-full font-bold sub-name border-0 text-xs"></td>
-                <td class="p-1 border border-slate-800"><input type="number" value="0" onchange="calcRowTotal(this)" class="w-9 text-center sub-t1 border-0 text-xs"></td>
-                <td class="p-1 border border-slate-800"><input type="number" value="0" onchange="calcRowTotal(this)" class="w-9 text-center sub-t2 border-0 text-xs"></td>
-                <td class="p-1 border border-slate-800"><input type="number" value="0" onchange="calcRowTotal(this)" class="w-9 text-center sub-t3 border-0 text-xs"></td>
-                <td class="p-1 border border-slate-800"><input type="number" value="0" onchange="calcRowTotal(this)" class="w-9 text-center sub-t4 border-0 text-xs"></td>
-                <td class="p-1 border border-slate-800"><input type="number" value="0" onchange="calcRowTotal(this)" class="w-9 text-center sub-exam border-0 text-xs"></td>
-                <td class="p-1 border border-slate-800 bg-slate-100 font-bold text-center"><span class="sub-total text-xs">0</span></td>
-                <td class="p-1 border border-slate-800"><input type="text" value="0" class="w-10 text-center sub-avg border-0 text-xs"></td>
-                <td class="p-1 border border-slate-800"><input type="text" value="0" class="w-10 text-center sub-high border-0 text-xs"></td>
-                <td class="p-1 border border-slate-800"><input type="text" value="0" class="w-10 text-center sub-low border-0 text-xs"></td>
-                <td class="p-1 border border-slate-800"><input type="text" value="-" class="w-10 text-center sub-pos border-0 text-xs"></td>
-                <td class="p-1 border border-slate-800"><input type="text" value="" placeholder="Remark" onkeydown="handleTabKey(event, this)" class="w-full sub-remark border-0 text-xs"></td>
+                <td class="p-1 border border-slate-800"><input type="number" value="${t1}" onchange="calcRowTotal(this)" class="w-9 text-center sub-t1 border-0 text-xs"></td>
+                <td class="p-1 border border-slate-800"><input type="number" value="${t2}" onchange="calcRowTotal(this)" class="w-9 text-center sub-t2 border-0 text-xs"></td>
+                <td class="p-1 border border-slate-800"><input type="number" value="${t3}" onchange="calcRowTotal(this)" class="w-9 text-center sub-t3 border-0 text-xs"></td>
+                <td class="p-1 border border-slate-800"><input type="number" value="${t4}" onchange="calcRowTotal(this)" class="w-9 text-center sub-t4 border-0 text-xs"></td>
+                <td class="p-1 border border-slate-800 bg-slate-100 font-bold text-center"><span class="sub-total text-xs">${total}</span></td>
+                <td class="p-1 border border-slate-800"><input type="number" value="${exam}" onchange="calcRowTotal(this)" class="w-9 text-center sub-exam border-0 text-xs"></td>
+                <td class="p-1 border border-slate-800"><input type="text" value="${avg}" class="w-10 text-center sub-avg border-0 text-xs"></td>
+                <td class="p-1 border border-slate-800"><input type="text" value="${high}" class="w-10 text-center sub-high border-0 text-xs"></td>
+                <td class="p-1 border border-slate-800"><input type="text" value="${low}" class="w-10 text-center sub-low border-0 text-xs"></td>
+                <td class="p-1 border border-slate-800"><input type="text" value="${pos}" class="w-10 text-center sub-pos border-0 text-xs"></td>
+                <td class="p-1 border border-slate-800"><input type="text" value="${remark}" placeholder="Remark" onkeydown="handleTabKey(event, this)" class="w-full sub-remark border-0 text-xs"></td>
             `;
             
             tbody.appendChild(tr);
@@ -326,6 +342,69 @@
             const t4 = parseFloat(row.querySelector('.sub-t4').value) || 0;
             const exam = parseFloat(row.querySelector('.sub-exam').value) || 0;
             row.querySelector('.sub-total').innerText = t1 + t2 + t3 + t4 + exam;
+        }
+
+        // LOAD PUBLISHED STUDENT RESULT FOR ADMIN EDITING
+        function loadStudentForEditing() {
+            const query = document.getElementById('admin-search-query').value.trim().toLowerCase();
+            if (!query) {
+                alert('Please enter a student name to search.');
+                return;
+            }
+
+            const archives = JSON.parse(localStorage.getItem('studentResultArchives')) || [];
+            const record = archives.find(item => item.name.toLowerCase() === query);
+
+            if (!record) {
+                alert(`No published result record found matching "${query}".`);
+                return;
+            }
+
+            // Populate Metadata
+            document.getElementById('edit-adm').value = record.admNo || '';
+            document.getElementById('edit-name').value = record.name || '';
+            document.getElementById('edit-class').value = record.class || 'JSS 3';
+            document.getElementById('edit-year').value = record.year || '';
+            document.getElementById('edit-term').value = record.term || 'Third Term';
+            document.getElementById('edit-age').value = record.age || '';
+            document.getElementById('edit-avg-age').value = record.avgAge || '';
+            document.getElementById('edit-no-class').value = record.noInClass || '';
+            document.getElementById('edit-attendance').value = record.attendance || '';
+            document.getElementById('edit-avg-score').value = record.avgScore || '';
+            document.getElementById('edit-position').value = record.position || '';
+            document.getElementById('edit-status').value = record.status || '';
+            document.getElementById('edit-resumption').value = record.resumption || '';
+
+            // Populate Remarks
+            document.getElementById('edit-counselor-remark').value = record.counselorRemark || '';
+            document.getElementById('edit-house-remark').value = record.houseRemark || '';
+            document.getElementById('edit-form-remark').value = record.formRemark || '';
+            document.getElementById('edit-principal-remark').value = record.principalRemark || '';
+
+            // Populate Subject Rows
+            const tbody = document.getElementById('edit-scores-body');
+            tbody.innerHTML = '';
+            if (record.scores && record.scores.length > 0) {
+                record.scores.forEach(s => {
+                    addNewSubjectRow(
+                        s.subject || '', 
+                        s.t1 || 0, 
+                        s.t2 || 0, 
+                        s.t3 || 0, 
+                        s.t4 || 0, 
+                        s.exam || 0, 
+                        s.avg || 0, 
+                        s.high || 0, 
+                        s.low || 0, 
+                        s.pos || '-', 
+                        s.remark || ''
+                    );
+                });
+            } else {
+                renderAdminSpreadsheet();
+            }
+
+            alert(`Successfully loaded results for ${record.name}. You can make modifications below and save.`);
         }
 
         function handleResultSearch(e) {
@@ -361,7 +440,9 @@
             if (pass === 'delight') {
                 document.getElementById('admin-login-card').classList.add('hidden');
                 document.getElementById('admin-dashboard').classList.remove('hidden');
-                renderAdminSpreadsheet();
+                if (document.querySelectorAll('.subject-row').length === 0) {
+                    renderAdminSpreadsheet();
+                }
             } else {
                 alert('Access Denied: Invalid Administrative Password.');
                 document.getElementById('admin-pass').value = "";
@@ -438,7 +519,7 @@
             localStorage.setItem('studentResultArchives', JSON.stringify(archives));
             localStorage.setItem('publishedStudentResult', JSON.stringify(studentRecord));
             
-            alert(`Success! Result for ${studentRecord.name} (${studentRecord.class} - ${studentRecord.term}) has been archived and published on ${timestamp}.`);
+            alert(`Success! Result for ${studentRecord.name} (${studentRecord.class} ${studentRecord.term}) has been archived and published on ${timestamp}.`);
         }
     </script>
 </body>
