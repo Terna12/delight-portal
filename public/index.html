@@ -202,22 +202,22 @@
                             <div>Resumption Date: <input type="text" id="edit-resumption" value="07/09/2025" class="w-full border p-1 rounded text-xs"></div>
                         </div>
 
-                        <!-- UPDATED TABLE HEADERS -->
+                        <!-- FULLY EDITABLE TABLE HEADERS -->
                         <div class="overflow-x-auto mb-4 w-full">
                             <table class="w-full min-w-[600px] text-left text-xs border-collapse border border-slate-800">
                                 <thead>
                                     <tr class="bg-slate-200 text-center font-bold text-[10px] sm:text-[11px] uppercase border-b border-slate-800">
-                                        <th class="p-1 border border-slate-800 text-left w-1/4"><input type="text" value="SUBJECTS" class="w-full bg-transparent font-bold text-center border-0" readonly></th>
-                                        <th class="p-1 border border-slate-800"><input type="text" value="1ST" class="w-full bg-transparent font-bold text-center border-0" readonly></th>
-                                        <th class="p-1 border border-slate-800"><input type="text" value="2ND" class="w-full bg-transparent font-bold text-center border-0" readonly></th>
-                                        <th class="p-1 border border-slate-800"><input type="text" value="3RD" class="w-full bg-transparent font-bold text-center border-0" readonly></th>
-                                        <th class="p-1 border border-slate-800 bg-slate-300 font-extrabold"><input type="text" value="TOTAL" class="w-full bg-transparent font-bold text-center border-0" readonly></th>
-                                        <th class="p-1 border border-slate-800"><input type="text" value="EXAM" class="w-full bg-transparent font-bold text-center border-0" readonly></th>
-                                        <th class="p-1 border border-slate-800 bg-slate-200 font-extrabold"><input type="text" value="TOTAL" class="w-full bg-transparent font-bold text-center border-0" readonly></th>
-                                        <th class="p-1 border border-slate-800"><input type="text" value="AVG" class="w-full bg-transparent font-bold text-center border-0" readonly></th>
-                                        <th class="p-1 border border-slate-800"><input type="text" value="HIGH" class="w-full bg-transparent font-bold text-center border-0" readonly></th>
-                                        <th class="p-1 border border-slate-800"><input type="text" value="POS" class="w-full bg-transparent font-bold text-center border-0" readonly></th>
-                                        <th class="p-1 border border-slate-800 text-left"><input type="text" value="REMARK" class="w-full bg-transparent font-bold text-center border-0" readonly></th>
+                                        <th class="p-1 border border-slate-800 text-left w-1/4"><input type="text" id="th-subjects" value="SUBJECTS" class="w-full bg-transparent font-bold text-center border focus:bg-white focus:outline-none p-0.5 rounded text-xs"></th>
+                                        <th class="p-1 border border-slate-800"><input type="text" id="th-t1" value="1ST" class="w-full bg-transparent font-bold text-center border focus:bg-white focus:outline-none p-0.5 rounded text-xs"></th>
+                                        <th class="p-1 border border-slate-800"><input type="text" id="th-t2" value="2ND" class="w-full bg-transparent font-bold text-center border focus:bg-white focus:outline-none p-0.5 rounded text-xs"></th>
+                                        <th class="p-1 border border-slate-800"><input type="text" id="th-t3" value="3RD" class="w-full bg-transparent font-bold text-center border focus:bg-white focus:outline-none p-0.5 rounded text-xs"></th>
+                                        <th class="p-1 border border-slate-800 bg-slate-100 font-extrabold"><input type="text" id="th-total1" value="TOTAL" class="w-full bg-transparent font-bold text-center border focus:bg-white focus:outline-none p-0.5 rounded text-xs"></th>
+                                        <th class="p-1 border border-slate-800"><input type="text" id="th-exam" value="EXAM" class="w-full bg-transparent font-bold text-center border focus:bg-white focus:outline-none p-0.5 rounded text-xs"></th>
+                                        <th class="p-1 border border-slate-800 bg-slate-200 font-extrabold"><input type="text" id="th-total2" value="TOTAL" class="w-full bg-transparent font-bold text-center border focus:bg-white focus:outline-none p-0.5 rounded text-xs"></th>
+                                        <th class="p-1 border border-slate-800"><input type="text" id="th-avg" value="AVG" class="w-full bg-transparent font-bold text-center border focus:bg-white focus:outline-none p-0.5 rounded text-xs"></th>
+                                        <th class="p-1 border border-slate-800"><input type="text" id="th-high" value="HIGH" class="w-full bg-transparent font-bold text-center border focus:bg-white focus:outline-none p-0.5 rounded text-xs"></th>
+                                        <th class="p-1 border border-slate-800"><input type="text" id="th-pos" value="POS" class="w-full bg-transparent font-bold text-center border focus:bg-white focus:outline-none p-0.5 rounded text-xs"></th>
+                                        <th class="p-1 border border-slate-800 text-left"><input type="text" id="th-remark" value="REMARK" class="w-full bg-transparent font-bold text-center border focus:bg-white focus:outline-none p-0.5 rounded text-xs"></th>
                                     </tr>
                                 </thead>
                                 <tbody id="edit-scores-body" class="divide-y divide-slate-800 text-[11px]">
@@ -285,17 +285,17 @@
             const grandTotal = interimTotal + (parseFloat(exam) || 0);
 
             tr.innerHTML = `
-                <td class="p-1 border border-slate-800"><input type="text" value="${subjectName}" placeholder="Subject Name" class="w-full font-bold sub-name border-0 text-xs"></td>
-                <td class="p-1 border border-slate-800"><input type="number" value="${t1}" onchange="calcRowTotal(this)" class="w-9 text-center sub-t1 border-0 text-xs"></td>
-                <td class="p-1 border border-slate-800"><input type="number" value="${t2}" onchange="calcRowTotal(this)" class="w-9 text-center sub-t2 border-0 text-xs"></td>
-                <td class="p-1 border border-slate-800"><input type="number" value="${t3}" onchange="calcRowTotal(this)" class="w-9 text-center sub-t3 border-0 text-xs"></td>
+                <td class="p-1 border border-slate-800"><input type="text" value="${subjectName}" placeholder="Subject Name" class="w-full font-bold sub-name border-0 text-xs bg-transparent focus:bg-white p-1"></td>
+                <td class="p-1 border border-slate-800"><input type="number" value="${t1}" onchange="calcRowTotal(this)" class="w-9 text-center sub-t1 border-0 text-xs bg-transparent focus:bg-white p-1"></td>
+                <td class="p-1 border border-slate-800"><input type="number" value="${t2}" onchange="calcRowTotal(this)" class="w-9 text-center sub-t2 border-0 text-xs bg-transparent focus:bg-white p-1"></td>
+                <td class="p-1 border border-slate-800"><input type="number" value="${t3}" onchange="calcRowTotal(this)" class="w-9 text-center sub-t3 border-0 text-xs bg-transparent focus:bg-white p-1"></td>
                 <td class="p-1 border border-slate-800 bg-slate-100 font-bold text-center"><span class="sub-interim-total text-xs">${interimTotal}</span></td>
-                <td class="p-1 border border-slate-800"><input type="number" value="${exam}" onchange="calcRowTotal(this)" class="w-9 text-center sub-exam border-0 text-xs"></td>
+                <td class="p-1 border border-slate-800"><input type="number" value="${exam}" onchange="calcRowTotal(this)" class="w-9 text-center sub-exam border-0 text-xs bg-transparent focus:bg-white p-1"></td>
                 <td class="p-1 border border-slate-800 bg-slate-200 font-bold text-center"><span class="sub-total text-xs">${grandTotal}</span></td>
-                <td class="p-1 border border-slate-800"><input type="text" value="${avg}" class="w-10 text-center sub-avg border-0 text-xs"></td>
-                <td class="p-1 border border-slate-800"><input type="text" value="${high}" class="w-10 text-center sub-high border-0 text-xs"></td>
-                <td class="p-1 border border-slate-800"><input type="text" value="${pos}" class="w-10 text-center sub-pos border-0 text-xs"></td>
-                <td class="p-1 border border-slate-800"><input type="text" value="${remark}" placeholder="Remark" onkeydown="handleTabKey(event, this)" class="w-full sub-remark border-0 text-xs"></td>
+                <td class="p-1 border border-slate-800"><input type="text" value="${avg}" class="w-10 text-center sub-avg border-0 text-xs bg-transparent focus:bg-white p-1"></td>
+                <td class="p-1 border border-slate-800"><input type="text" value="${high}" class="w-10 text-center sub-high border-0 text-xs bg-transparent focus:bg-white p-1"></td>
+                <td class="p-1 border border-slate-800"><input type="text" value="${pos}" class="w-10 text-center sub-pos border-0 text-xs bg-transparent focus:bg-white p-1"></td>
+                <td class="p-1 border border-slate-800"><input type="text" value="${remark}" placeholder="Remark" onkeydown="handleTabKey(event, this)" class="w-full sub-remark border-0 text-xs bg-transparent focus:bg-white p-1"></td>
             `;
             
             tbody.appendChild(tr);
@@ -359,6 +359,21 @@
             document.getElementById('edit-position').value = record.position || '';
             document.getElementById('edit-status').value = record.status || '';
             document.getElementById('edit-resumption').value = record.resumption || '';
+
+            // Load header titles if they were custom saved
+            if (record.headers) {
+                document.getElementById('th-subjects').value = record.headers.subjects || 'SUBJECTS';
+                document.getElementById('th-t1').value = record.headers.t1 || '1ST';
+                document.getElementById('th-t2').value = record.headers.t2 || '2ND';
+                document.getElementById('th-t3').value = record.headers.t3 || '3RD';
+                document.getElementById('th-total1').value = record.headers.total1 || 'TOTAL';
+                document.getElementById('th-exam').value = record.headers.exam || 'EXAM';
+                document.getElementById('th-total2').value = record.headers.total2 || 'TOTAL';
+                document.getElementById('th-avg').value = record.headers.avg || 'AVG';
+                document.getElementById('th-high').value = record.headers.high || 'HIGH';
+                document.getElementById('th-pos').value = record.headers.pos || 'POS';
+                document.getElementById('th-remark').value = record.headers.remark || 'REMARK';
+            }
 
             document.getElementById('edit-counselor-remark').value = record.counselorRemark || '';
             document.getElementById('edit-house-remark').value = record.houseRemark || '';
@@ -456,6 +471,19 @@
                 position: document.getElementById('edit-position').value,
                 status: document.getElementById('edit-status').value,
                 resumption: document.getElementById('edit-resumption').value,
+                headers: {
+                    subjects: document.getElementById('th-subjects').value,
+                    t1: document.getElementById('th-t1').value,
+                    t2: document.getElementById('th-t2').value,
+                    t3: document.getElementById('th-t3').value,
+                    total1: document.getElementById('th-total1').value,
+                    exam: document.getElementById('th-exam').value,
+                    total2: document.getElementById('th-total2').value,
+                    avg: document.getElementById('th-avg').value,
+                    high: document.getElementById('th-high').value,
+                    pos: document.getElementById('th-pos').value,
+                    remark: document.getElementById('th-remark').value
+                },
                 counselorRemark: document.getElementById('edit-counselor-remark').value,
                 houseRemark: document.getElementById('edit-house-remark').value,
                 formRemark: document.getElementById('edit-form-remark').value,
