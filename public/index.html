@@ -3,524 +3,193 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Delight International School - Result Portal</title>
+    <title>Termly Academic Report - Delight International School</title>
     <!-- Tailwind CSS -->
     <script src="https://cdn.tailwindcss.com"></script>
     <!-- FontAwesome Icons -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        @media print {
+            .no-print { display: none !important; }
+            body { background: white; color: black; padding: 0; margin: 0; }
+            .shadow-xl { box-shadow: none !important; }
+        }
+    </style>
 </head>
-<body class="bg-slate-100 text-slate-800 font-sans min-h-screen flex flex-col">
-    <!-- Header Navigation -->
-    <header class="bg-red-800 text-white shadow-md">
-        <div class="max-w-7xl mx-auto px-4 py-3 flex flex-col sm:flex-row justify-between items-center gap-3">
-            <div class="flex items-center gap-3 text-center sm:text-left">
-                <img src="logo.png" alt="School Crest" class="h-12 w-12 object-cover rounded-full bg-white p-0.5 shadow-md border border-red-900 mx-auto sm:mx-0" onerror="this.src='https://via.placeholder.com/50?text=LOGO'">
-                <div>
-                    <h1 class="text-base sm:text-xl md:text-2xl font-bold tracking-wide">SUPREME LORD'S DELIGHT INTERNATIONAL SCHOOL</h1>
-                    <p class="text-[10px] sm:text-xs text-red-200">ORORO • ABUJA — STUDENT RESULT ARCHIVE PORTAL</p>
+<body class="bg-slate-100 text-slate-800 font-sans min-h-screen p-3 sm:p-8">
+    <!-- Action Buttons -->
+    <div class="max-w-5xl mx-auto flex justify-between items-center mb-4 no-print">
+        <button onclick="window.close()" class="bg-slate-600 hover:bg-slate-700 text-white px-3 py-1.5 sm:px-4 sm:py-2 rounded-lg font-semibold text-xs sm:text-sm flex items-center gap-2 shadow">
+            <i class="fa-solid fa-arrow-left"></i> Close Tab
+        </button>
+        <button onclick="window.print()" class="bg-blue-600 hover:bg-blue-700 text-white px-4 py-1.5 sm:px-5 sm:py-2 rounded-lg font-bold text-xs sm:text-sm flex items-center gap-2 shadow-lg">
+            <i class="fa-solid fa-print"></i> Print / PDF
+        </button>
+    </div>
+    <!-- TERMLY ACADEMIC REPORT SHEET -->
+    <div class="bg-white p-4 sm:p-6 md:p-8 rounded-xl shadow-xl max-w-5xl mx-auto border border-slate-300 overflow-x-auto">
+        <div class="border-2 border-slate-800 p-3 sm:p-4 min-w-[750px]">
+            
+            <!-- Header -->
+            <div class="flex items-center justify-between border-b-2 border-slate-800 pb-3 mb-3">
+                <img src="logo.png" alt="School Crest" class="h-16 w-16 sm:h-20 sm:w-20 object-contain" onerror="this.src='https://via.placeholder.com/80?text=CREST'">
+                <div class="text-center flex-grow px-2">
+                    <h2 class="text-base sm:text-xl md:text-2xl font-black text-slate-900 tracking-tight uppercase">SUPREME LORD'S DELIGHT INTERNATIONAL SCHOOL</h2>
+                    <p class="text-[10px] sm:text-xs font-bold text-slate-700">ClOSE C MAITAMA OROZO ABUJA-FCT.</p>
+                    <h3 id="res-term-header" class="text-sm sm:text-lg font-black underline tracking-wider mt-1 text-red-900 uppercase">TERMLY ACADEMIC REPORT</h3>
+                </div>
+                <div class="text-right text-xs font-bold text-slate-800">
+                    <div>ADM NO: <span id="res-adm" class="underline">319</span></div>
+                    <div class="text-[10px] text-slate-500 mt-1" id="res-timestamp">Uploaded: -</div>
                 </div>
             </div>
-            <nav class="flex gap-2 w-full sm:w-auto justify-center">
-                <button onclick="switchTab('student')" id="nav-student" class="flex-1 sm:flex-none px-3 py-1.5 sm:px-4 sm:py-2 text-xs sm:text-sm font-semibold rounded-lg bg-red-900 text-white shadow">
-                    <i class="fa-solid fa-graduation-cap mr-1 sm:mr-2"></i>Student Portal
-                </button>
-                <button onclick="switchTab('admin')" id="nav-admin" class="flex-1 sm:flex-none px-3 py-1.5 sm:px-4 sm:py-2 text-xs sm:text-sm font-semibold rounded-lg bg-red-700 hover:bg-red-900 text-white transition">
-                    <i class="fa-solid fa-user-shield mr-1 sm:mr-2"></i>Admin Login
-                </button>
-            </nav>
+            <!-- Metadata Grid -->
+            <div class="text-xs font-semibold grid grid-cols-2 sm:grid-cols-4 gap-y-2 gap-x-4 border-b-2 border-slate-800 pb-3 mb-4">
+                <div>Name: <span id="res-name" class="font-bold underline text-sm uppercase">-</span></div>
+                <div>Class: <span id="res-class" class="font-bold underline">-</span></div>
+                <div>Year: <span id="res-year" class="font-bold underline">2024/2025</span></div>
+                <div>Term: <span id="res-term" class="font-bold underline uppercase">-</span></div>
+                <div>Age: <span id="res-age" class="underline">13</span></div>
+                <div>Average Class Age: <span id="res-avg-age" class="underline">13</span></div>
+                <div>No In Class: <span id="res-no-in-class" class="underline">38</span></div>
+                <div>No. of Attendance: <span id="res-attendance" class="underline">110 / 118</span></div>
+                <div>Average Score: <span id="res-avg-score" class="font-bold underline">73.1</span></div>
+                <div>Position/Grade: <span id="res-position" class="font-bold underline">1st / A</span></div>
+                <div>Pass/Fail: <span id="res-status" class="font-bold underline text-green-700">PASS</span></div>
+                <div>Date of Resumption: <span id="res-resumption" class="underline">07/09/2025</span></div>
+            </div>
+            <!-- Subject Scores Table -->
+            <div class="overflow-x-auto mb-4">
+                <table class="w-full text-left text-xs border-collapse border border-slate-800">
+                    <thead>
+                        <tr class="bg-slate-200 text-center font-bold text-[11px] uppercase border-b border-slate-800">
+                            <th class="p-1 border border-slate-800 text-left w-1/4">Subjects</th>
+                            <th class="p-1 border border-slate-800">1st</th>
+                            <th class="p-1 border border-slate-800">2nd</th>
+                            <th class="p-1 border border-slate-800">3rd</th>
+                            <th class="p-1 border border-slate-800 font-extrabold bg-slate-300">Total</th>
+                            <th class="p-1 border border-slate-800">Exam</th>
+                            <th class="p-1 border border-slate-800">Class Avg</th>
+                            <th class="p-1 border border-slate-800">Highest</th>
+                            <th class="p-1 border border-slate-800">Position</th>
+                            <th class="p-1 border border-slate-800 text-left">Teacher's Remark</th>
+                        </tr>
+                    </thead>
+                    <tbody id="res-scores-body" class="divide-y divide-slate-800 text-[11px]">
+                        <!-- Populated by JavaScript -->
+                    </tbody>
+                </table>
+            </div>
+            <!-- Skills & Behaviour Matrix -->
+            <div class="grid grid-cols-1 sm:grid-cols-3 gap-3 mb-4 text-[11px]">
+                <div class="border border-slate-800 p-2">
+                    <h4 class="font-bold border-b border-slate-800 pb-1 mb-1 text-center bg-slate-100">SKILLS RATING</h4>
+                    <div class="space-y-1">
+                        <div class="flex justify-between"><span>Handwriting</span><span class="font-bold">5</span></div>
+                        <div class="flex justify-between"><span>Fluency</span><span class="font-bold">4</span></div>
+                        <div class="flex justify-between"><span>Games & Sports</span><span class="font-bold">4</span></div>
+                        <div class="flex justify-between"><span>Crafts / Drawing</span><span class="font-bold">5</span></div>
+                        <div class="flex justify-between"><span>Musical Skills</span><span class="font-bold">3</span></div>
+                    </div>
+                </div>
+                <div class="border border-slate-800 p-2">
+                    <h4 class="font-bold border-b border-slate-800 pb-1 mb-1 text-center bg-slate-100">BEHAVIOUR (PART I)</h4>
+                    <div class="space-y-1">
+                        <div class="flex justify-between"><span>Punctuality</span><span class="font-bold">5</span></div>
+                        <div class="flex justify-between"><span>Attendance at Class</span><span class="font-bold">5</span></div>
+                        <div class="flex justify-between"><span>Reliability</span><span class="font-bold">4</span></div>
+                        <div class="flex justify-between"><span>Neatness</span><span class="font-bold">5</span></div>
+                        <div class="flex justify-between"><span>Politeness & Honesty</span><span class="font-bold">5</span></div>
+                    </div>
+                </div>
+                <div class="border border-slate-800 p-2">
+                    <h4 class="font-bold border-b border-slate-800 pb-1 mb-1 text-center bg-slate-100">BEHAVIOUR (PART II)</h4>
+                    <div class="space-y-1">
+                        <div class="flex justify-between"><span>Spirit of Co-operation</span><span class="font-bold">5</span></div>
+                        <div class="flex justify-between"><span>Sense of Responsibility</span><span class="font-bold">4</span></div>
+                        <div class="flex justify-between"><span>Attentiveness</span><span class="font-bold">4</span></div>
+                        <div class="flex justify-between"><span>Organization Ability</span><span class="font-bold">5</span></div>
+                        <div class="flex justify-between"><span>Self Control</span><span class="font-bold">4</span></div>
+                    </div>
+                </div>
+            </div>
+            <!-- Remarks -->
+            <div class="border border-slate-800 p-3 space-y-2 text-xs">
+                <div><span class="font-bold">Guidance Counselor's Remark:</span> <span id="res-counselor-remark" class="italic underline">The sky is your limit, keep the flag flying.</span></div>
+                <div><span class="font-bold">House Master's Remark:</span> <span id="res-house-remark" class="italic underline">He is a very good and obedient student.</span></div>
+                <div><span class="font-bold">Form Master's Remark:</span> <span id="res-form-remark" class="italic underline">He is hardworking and focused.</span></div>
+                <div class="flex flex-col sm:flex-row justify-between items-start sm:items-end pt-2 gap-2">
+                    <div><span class="font-bold">Principal's Remark:</span> <span id="res-principal-remark" class="italic underline font-bold">An excellent result.</span></div>
+                    <div class="text-center border-t border-slate-800 px-6 pt-1 font-bold w-full sm:w-auto">Principal's Signature & Date</div>
+                </div>
+            </div>
         </div>
-    </header>
-
-    <!-- MAIN CONTAINER -->
-    <main class="flex-grow max-w-7xl w-full mx-auto p-3 sm:p-6 flex flex-col justify-center">
-        <!-- STUDENT PORTAL SECTION -->
-        <section id="student-section" class="block w-full py-4 sm:py-8">
-            <div class="bg-white/95 backdrop-blur-md rounded-2xl shadow-xl hover:shadow-2xl transition-all duration-300 p-5 sm:p-8 max-w-xl mx-auto border border-red-100 relative overflow-hidden">
-                <!-- Decorative top color accent banner -->
-                <div class="absolute top-0 left-0 right-0 h-2 bg-gradient-to-r from-red-700 via-red-800 to-red-900"></div>
-
-                <!-- Header Badge and Title -->
-                <div class="text-center mb-6 pt-1">
-                    <div class="inline-flex items-center justify-center w-12 h-12 rounded-full bg-red-50 text-red-700 mb-3 shadow-inner">
-                        <i class="fa-solid fa-graduation-cap text-xl"></i>
-                    </div>
-                    <h2 class="text-xl sm:text-2xl font-extrabold text-slate-800 tracking-tight">
-                        Check Student Academic Report
-                    </h2>
-                    <p class="text-slate-500 text-xs sm:text-sm mt-1 max-w-md mx-auto">
-                        Enter student details below to search and view termly performance records.
-                    </p>
-                </div>
-                
-                <form id="result-search-form" onsubmit="handleResultSearch(event)" class="space-y-4">
-                    <!-- Student Full Name Input -->
-                    <div>
-                        <label class="block text-xs font-bold text-slate-700 uppercase tracking-wider mb-1.5 flex items-center gap-1.5">
-                            <i class="fa-solid fa-user text-red-700 text-xs"></i> Student Full Name
-                        </label>
-                        <div class="relative">
-                            <input type="text" id="search-name" required placeholder="e.g. Lord Terna" class="w-full pl-10 pr-4 py-2.5 sm:py-3 bg-slate-50 border border-slate-200 rounded-xl text-sm font-medium text-slate-800 placeholder-slate-400 focus:bg-white focus:ring-2 focus:ring-red-600 focus:border-red-600 focus:outline-none transition-all shadow-sm">
-                            <div class="absolute inset-y-0 left-0 pl-3.5 flex items-center pointer-events-none text-slate-400">
-                                <i class="fa-solid fa-signature text-xs"></i>
-                            </div>
-                        </div>
-                    </div>
-
-                    <!-- Grid for Class and Term -->
-                    <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
-                        <div>
-                            <label class="block text-xs font-bold text-slate-700 uppercase tracking-wider mb-1.5 flex items-center gap-1.5">
-                                <i class="fa-solid fa-chalkboard-user text-red-700 text-xs"></i> Class Level
-                            </label>
-                            <div class="relative">
-                                <select id="search-class" required class="w-full px-3.5 py-2.5 sm:py-3 bg-slate-50 border border-slate-200 rounded-xl text-sm font-medium text-slate-800 focus:bg-white focus:ring-2 focus:ring-red-600 focus:border-red-600 focus:outline-none transition-all shadow-sm appearance-none cursor-pointer">
-                                    <option value="">Select Class</option>
-                                    <option value="JSS 1">JSS 1</option>
-                                    <option value="JSS 2">JSS 2</option>
-                                    <option value="JSS 3" selected>JSS 3</option>
-                                    <option value="SS 1">SS 1</option>
-                                    <option value="SS 2">SS 2</option>
-                                    <option value="SS 3">SS 3</option>
-                                </select>
-                                <div class="absolute inset-y-0 right-0 pr-3.5 flex items-center pointer-events-none text-slate-400">
-                                    <i class="fa-solid fa-chevron-down text-xs"></i>
-                                </div>
-                            </div>
-                        </div>
-
-                        <div>
-                            <label class="block text-xs font-bold text-slate-700 uppercase tracking-wider mb-1.5 flex items-center gap-1.5">
-                                <i class="fa-solid fa-calendar-days text-red-700 text-xs"></i> Academic Term
-                            </label>
-                            <div class="relative">
-                                <select id="search-term" required class="w-full px-3.5 py-2.5 sm:py-3 bg-slate-50 border border-slate-200 rounded-xl text-sm font-medium text-slate-800 focus:bg-white focus:ring-2 focus:ring-red-600 focus:border-red-600 focus:outline-none transition-all shadow-sm appearance-none cursor-pointer">
-                                    <option value="First Term">First Term</option>
-                                    <option value="Second Term">Second Term</option>
-                                    <option value="Third Term" selected>Third Term</option>
-                                </select>
-                                <div class="absolute inset-y-0 right-0 pr-3.5 flex items-center pointer-events-none text-slate-400">
-                                    <i class="fa-solid fa-chevron-down text-xs"></i>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-
-                    <!-- Call To Action Button -->
-                    <button type="submit" class="w-full mt-2 bg-gradient-to-r from-red-700 via-red-800 to-red-900 hover:from-red-800 hover:to-red-950 text-white font-bold py-3 sm:py-3.5 px-4 rounded-xl shadow-lg hover:shadow-red-900/20 active:scale-[0.99] transition-all duration-200 text-sm tracking-wide flex items-center justify-center gap-2 group">
-                        <i class="fa-solid fa-magnifying-glass text-xs group-hover:scale-110 transition-transform"></i>
-                        <span>Search & View Result Sheet</span>
-                        <i class="fa-solid fa-arrow-right text-xs opacity-75 group-hover:translate-x-1 transition-transform"></i>
-                    </button>
-                </form>
-
-                <!-- Search Archive Result Status / Match List -->
-                <div id="search-feedback" class="mt-4 text-xs font-semibold text-center"></div>
-            </div>
-        </section>
-
-        <!-- ADMIN PANEL SECTION -->
-        <section id="admin-section" class="hidden">
-            <!-- Password Auth Login -->
-            <div id="admin-login-card" class="bg-white rounded-xl shadow-md p-4 sm:p-6 max-w-md mx-auto border-t-4 border-red-800">
-                <h2 class="text-xl sm:text-2xl font-bold text-red-800 mb-2 flex items-center gap-2">
-                    <i class="fa-solid fa-lock"></i> Admin Authentication
-                </h2>
-                <p class="text-slate-600 text-xs sm:text-sm mb-4">Enter master administrative key to access result editor.</p>
-                
-                <form onsubmit="handleAdminLogin(event)" class="space-y-4">
-                    <div>
-                        <label class="block text-xs sm:text-sm font-semibold text-slate-700 mb-1">Password</label>
-                        <input type="password" id="admin-pass" required placeholder="Enter password" class="w-full px-3 py-2 sm:px-4 sm:py-2.5 border rounded-lg text-sm focus:ring-2 focus:ring-red-600 focus:outline-none">
-                    </div>
-                    <button type="submit" class="w-full bg-red-800 hover:bg-red-900 text-white font-bold py-2.5 rounded-lg transition text-sm">Login to Control Panel</button>
-                </form>
-            </div>
-
-            <!-- Admin Control Panel -->
-            <div id="admin-dashboard" class="hidden space-y-6">
-                <div class="flex flex-col sm:flex-row justify-between items-start sm:items-center bg-white p-4 rounded-xl shadow border-l-4 border-red-800 gap-3">
-                    <div>
-                        <h2 class="text-lg sm:text-xl font-bold text-slate-800"><i class="fa-solid fa-table-cells text-red-800 mr-2"></i>Termly Result Upload & Archive Manager</h2>
-                        <p class="text-[11px] sm:text-xs text-slate-500">Publish or update results with precise upload date, year, and time logging.</p>
-                    </div>
-                    <div class="flex gap-2 w-full sm:w-auto">
-                        <button onclick="saveAndPublishResult()" class="flex-1 sm:flex-none bg-green-700 hover:bg-green-800 text-white text-xs font-bold px-3 py-2 rounded-lg shadow flex items-center justify-center gap-1">
-                            <i class="fa-solid fa-cloud-arrow-up"></i> Save & Archive Result
-                        </button>
-                        <button onclick="logoutAdmin()" class="bg-red-100 text-red-800 text-xs font-bold px-3 py-2 rounded-lg hover:bg-red-200">
-                            <i class="fa-solid fa-right-from-bracket mr-1"></i> Lock
-                        </button>
-                    </div>
-                </div>
-
-                <!-- NEW: SEARCH & RETRIEVE PUBLISHED RESULT BANNER -->
-                <div class="bg-amber-50 rounded-xl shadow p-4 border border-amber-300">
-                    <h3 class="font-bold text-amber-900 mb-1.5 text-xs sm:text-sm flex items-center gap-2 uppercase tracking-wider">
-                        <i class="fa-solid fa-pen-to-square"></i> Retrieve Published Result for Editing
-                    </h3>
-                    <p class="text-amber-800 text-xs mb-3">Search by student name to load existing published records into the spreadsheet for modifications.</p>
-                    <div class="flex flex-col sm:flex-row gap-2">
-                        <input type="text" id="admin-search-query" placeholder="Enter Student Name (e.g. Lord Terna)" class="flex-grow px-3 py-2 bg-white border border-amber-300 rounded-lg text-xs font-medium focus:ring-2 focus:ring-amber-500 focus:outline-none">
-                        <button onclick="loadStudentForEditing()" class="bg-amber-600 hover:bg-amber-700 text-white font-bold px-4 py-2 rounded-lg text-xs transition flex items-center justify-center gap-2 shadow">
-                            <i class="fa-solid fa-folder-open"></i> Load Result to Edit
-                        </button>
-                    </div>
-                </div>
-
-                <!-- EDITABLE SPREADSHEET FORM -->
-                <div class="bg-white p-3 sm:p-6 rounded-xl shadow-xl max-w-5xl mx-auto border border-slate-300">
-                    <div class="border-2 border-slate-800 p-3 sm:p-4 w-full">
-                        <!-- Header -->
-                        <div class="flex items-center justify-between border-b-2 border-slate-800 pb-3 mb-3 gap-2">
-                            <img src="logo.png" alt="School Crest" class="h-10 w-10 sm:h-16 sm:w-16 object-contain flex-shrink-0" onerror="this.src='https://via.placeholder.com/80?text=CREST'">
-                            <div class="text-center flex-grow px-1">
-                                <h2 class="text-xs sm:text-lg md:text-xl font-black text-slate-900 tracking-tight uppercase">SUPREME LORD'S DELIGHT INTERNATIONAL SCHOOL</h2>
-                                <p class="text-[9px] sm:text-[11px] font-bold text-slate-700">CLOSE C MAITAMA OROZO.ABUJA-FCT.</p>
-                                <h3 class="text-[10px] sm:text-md font-black underline tracking-wider text-red-900 uppercase">TERMLY ACADEMIC REPORT UPLOAD SHEET</h3>
-                            </div>
-                            <div class="text-right text-[10px] sm:text-xs font-bold flex-shrink-0">
-                                <div>ADM NO: <input type="text" id="edit-adm" value="319" class="w-12 sm:w-20 border border-slate-400 p-1 text-xs rounded"></div>
-                            </div>
-                        </div>
-
-                        <!-- Editable Metadata Grid -->
-                        <div class="text-xs font-semibold grid grid-cols-2 sm:grid-cols-4 gap-2 sm:gap-3 border-b-2 border-slate-800 pb-3 mb-4 bg-slate-50 p-2 rounded">
-                            <div>Student Name: <input type="text" id="edit-name" value="Lord Terna" class="w-full border p-1 rounded font-bold text-slate-900 text-xs"></div>
-                            <div>Class Level: 
-                                <select id="edit-class" class="w-full border p-1 rounded text-xs">
-                                    <option value="JSS 1">JSS 1</option>
-                                    <option value="JSS 2">JSS 2</option>
-                                    <option value="JSS 3" selected>JSS 3</option>
-                                    <option value="SS 1">SS 1</option>
-                                    <option value="SS 2">SS 2</option>
-                                    <option value="SS 3">SS 3</option>
-                                </select>
-                            </div>
-                            <div>Year/Session: <input type="text" id="edit-year" value="2024/2025" class="w-full border p-1 rounded text-xs"></div>
-                            <div>Academic Term: 
-                                <select id="edit-term" class="w-full border p-1 rounded text-xs font-bold text-red-800">
-                                    <option value="First Term">First Term</option>
-                                    <option value="Second Term">Second Term</option>
-                                    <option value="Third Term" selected>Third Term</option>
-                                </select>
-                            </div>
-                            <div>Age: <input type="text" id="edit-age" value="13" class="w-full border p-1 rounded text-xs"></div>
-                            <div>Avg Class Age: <input type="text" id="edit-avg-age" value="13" class="w-full border p-1 rounded text-xs"></div>
-                            <div>No In Class: <input type="text" id="edit-no-class" value="38" class="w-full border p-1 rounded text-xs"></div>
-                            <div>Attendance: <input type="text" id="edit-attendance" value="110 / 118" class="w-full border p-1 rounded text-xs"></div>
-                            <div>Avg Score: <input type="text" id="edit-avg-score" value="73.1" class="w-full border p-1 rounded text-xs"></div>
-                            <div>Position/Grade: <input type="text" id="edit-position" value="1st / A" class="w-full border p-1 rounded text-xs"></div>
-                            <div>Pass/Fail: <input type="text" id="edit-status" value="PASS" class="w-full border p-1 rounded text-xs"></div>
-                            <div>Resumption Date: <input type="text" id="edit-resumption" value="07/09/2025" class="w-full border p-1 rounded text-xs"></div>
-                        </div>
-
-                        <!-- Editable Subject Table -->
-                        <div class="overflow-x-auto mb-4 w-full">
-                            <table class="w-full min-w-[600px] text-left text-xs border-collapse border border-slate-800">
-                                <thead>
-                                    <tr class="bg-slate-200 text-center font-bold text-[10px] sm:text-[11px] uppercase border-b border-slate-800">
-                                        <th class="p-1 border border-slate-800 text-left w-1/4"><input type="text" value="SUBJECTS" class="w-full bg-transparent font-bold text-center border-0" readonly></th>
-                                        <th class="p-1 border border-slate-800"><input type="text" value="1ST" class="w-full bg-transparent font-bold text-center border-0" readonly></th>
-                                        <th class="p-1 border border-slate-800"><input type="text" value="2ND" class="w-full bg-transparent font-bold text-center border-0" readonly></th>
-                                        <th class="p-1 border border-slate-800"><input type="text" value="3RD" class="w-full bg-transparent font-bold text-center border-0" readonly></th>
-                                        <th class="p-1 border border-slate-800"><input type="text" value="4TH" class="w-full bg-transparent font-bold text-center border-0" readonly></th>
-                                        <th class="p-1 border border-slate-800 bg-slate-300 font-extrabold"><input type="text" value="TOTAL" class="w-full bg-transparent font-bold text-center border-0" readonly></th>
-                                        <th class="p-1 border border-slate-800"><input type="text" value="EXAM" class="w-full bg-transparent font-bold text-center border-0" readonly></th>
-                                        <th class="p-1 border border-slate-800"><input type="text" value="AVG" class="w-full bg-transparent font-bold text-center border-0" readonly></th>
-                                        <th class="p-1 border border-slate-800"><input type="text" value="HIGH" class="w-full bg-transparent font-bold text-center border-0" readonly></th>
-                                        <th class="p-1 border border-slate-800"><input type="text" value="LOW" class="w-full bg-transparent font-bold text-center border-0" readonly></th>
-                                        <th class="p-1 border border-slate-800"><input type="text" value="POS" class="w-full bg-transparent font-bold text-center border-0" readonly></th>
-                                        <th class="p-1 border border-slate-800 text-left"><input type="text" value="REMARK" class="w-full bg-transparent font-bold text-center border-0" readonly></th>
-                                    </tr>
-                                </thead>
-                                <tbody id="edit-scores-body" class="divide-y divide-slate-800 text-[11px]">
-                                    <!-- Populated via JS -->
-                                </tbody>
-                            </table>
-                        </div>
-
-                        <!-- Mobile & Desktop Manual Add Row Button -->
-                        <div class="mb-4">
-                            <button type="button" onclick="addNewSubjectRow('', 0, 0, 0, 0, 0, 0, 0, 0, '-', '')" class="w-full sm:w-auto bg-slate-800 hover:bg-slate-900 text-white font-bold px-4 py-2 rounded-lg text-xs flex items-center justify-center gap-2 shadow">
-                                <i class="fa-solid fa-plus"></i> Add New Subject Row
-                            </button>
-                        </div>
-
-                        <!-- Remarks -->
-                        <div class="border border-slate-800 p-3 space-y-2 text-xs">
-                            <div><span class="font-bold">Counselor's Remark:</span> <input type="text" id="edit-counselor-remark" value="The sky is your limit, keep the flag flying." class="w-full sm:w-4/5 border p-1 rounded text-xs"></div>
-                            <div><span class="font-bold">House Master's Remark:</span> <input type="text" id="edit-house-remark" value="He is a very good and obedient student." class="w-full sm:w-4/5 border p-1 rounded text-xs"></div>
-                            <div><span class="font-bold">Form Master's Remark:</span> <input type="text" id="edit-form-remark" value="He is hardworking and focused." class="w-full sm:w-4/5 border p-1 rounded text-xs"></div>
-                            <div><span class="font-bold">Principal's Remark:</span> <input type="text" id="edit-principal-remark" value="An excellent result." class="w-full sm:w-4/5 border p-1 rounded text-xs"></div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </section>
-    </main>
-
-    <!-- JavaScript Logic -->
+    </div>
     <script>
-        const initialSubjects = [
-            "Mathematics", "English Language", "Hausa", "Integrated Science", "Social Studies", 
-            "Physical Education", "Introductory Technology", "Home Economics", "Business Studies", "French", "Computer Studies"
-        ];
-
-        function switchTab(tab) {
-            if (tab === 'student') {
-                document.getElementById('student-section').classList.remove('hidden');
-                document.getElementById('admin-section').classList.add('hidden');
-                document.getElementById('nav-student').classList.replace('bg-red-700', 'bg-red-900');
-                document.getElementById('nav-admin').classList.replace('bg-red-900', 'bg-red-700');
-            } else {
-                document.getElementById('student-section').classList.add('hidden');
-                document.getElementById('admin-section').classList.remove('hidden');
-                document.getElementById('nav-admin').classList.replace('bg-red-700', 'bg-red-900');
-                document.getElementById('nav-student').classList.replace('bg-red-900', 'bg-red-700');
-                if (document.querySelectorAll('.subject-row').length === 0) {
-                    renderAdminSpreadsheet();
-                }
-            }
-        }
-
-        function renderAdminSpreadsheet() {
-            const tbody = document.getElementById('edit-scores-body');
-            tbody.innerHTML = "";
-            initialSubjects.forEach((sub) => {
-                addNewSubjectRow(sub);
-            });
-        }
-
-        function addNewSubjectRow(subjectName = "", t1 = 0, t2 = 0, t3 = 0, t4 = 0, exam = 0, avg = 0, high = 0, low = 0, pos = "-", remark = "") {
-            const tbody = document.getElementById('edit-scores-body');
-            const tr = document.createElement('tr');
-            tr.className = 'subject-row';
-            
-            const total = (parseFloat(t1) || 0) + (parseFloat(t2) || 0) + (parseFloat(t3) || 0) + (parseFloat(t4) || 0) + (parseFloat(exam) || 0);
-
-            tr.innerHTML = `
-                <td class="p-1 border border-slate-800"><input type="text" value="${subjectName}" placeholder="Subject Name" class="w-full font-bold sub-name border-0 text-xs"></td>
-                <td class="p-1 border border-slate-800"><input type="number" value="${t1}" onchange="calcRowTotal(this)" class="w-9 text-center sub-t1 border-0 text-xs"></td>
-                <td class="p-1 border border-slate-800"><input type="number" value="${t2}" onchange="calcRowTotal(this)" class="w-9 text-center sub-t2 border-0 text-xs"></td>
-                <td class="p-1 border border-slate-800"><input type="number" value="${t3}" onchange="calcRowTotal(this)" class="w-9 text-center sub-t3 border-0 text-xs"></td>
-                <td class="p-1 border border-slate-800"><input type="number" value="${t4}" onchange="calcRowTotal(this)" class="w-9 text-center sub-t4 border-0 text-xs"></td>
-                <td class="p-1 border border-slate-800 bg-slate-100 font-bold text-center"><span class="sub-total text-xs">${total}</span></td>
-                <td class="p-1 border border-slate-800"><input type="number" value="${exam}" onchange="calcRowTotal(this)" class="w-9 text-center sub-exam border-0 text-xs"></td>
-                <td class="p-1 border border-slate-800"><input type="text" value="${avg}" class="w-10 text-center sub-avg border-0 text-xs"></td>
-                <td class="p-1 border border-slate-800"><input type="text" value="${high}" class="w-10 text-center sub-high border-0 text-xs"></td>
-                <td class="p-1 border border-slate-800"><input type="text" value="${low}" class="w-10 text-center sub-low border-0 text-xs"></td>
-                <td class="p-1 border border-slate-800"><input type="text" value="${pos}" class="w-10 text-center sub-pos border-0 text-xs"></td>
-                <td class="p-1 border border-slate-800"><input type="text" value="${remark}" placeholder="Remark" onkeydown="handleTabKey(event, this)" class="w-full sub-remark border-0 text-xs"></td>
+        const activeReport = JSON.parse(sessionStorage.getItem('activeReport')) || JSON.parse(localStorage.getItem('publishedStudentResult')) || {
+            admNo: "319",
+            name: "Lord Terna",
+            class: "JSS 3",
+            year: "2024/2025",
+            term: "Third Term",
+            age: "13",
+            avgAge: "13",
+            noInClass: "38",
+            attendance: "110 / 118",
+            avgScore: "73.1",
+            position: "1st / A",
+            status: "PASS",
+            resumption: "07/09/2025",
+            uploadTimestamp: "Archive Sample",
+            counselorRemark: "The sky is your limit, keep the flag flying.",
+            houseRemark: "He is a very good and obedient student.",
+            formRemark: "He is hardworking and focused.",
+            principalRemark: "An excellent result.",
+            scores: [
+                { subject: "Mathematics", t1: 15, t2: 15, t3: 13, t4: 10, exam: 22, total: 75, avg: 52.8, high: 74, low: 41, pos: "15th", remark: "CREDIT" },
+                { subject: "English Language", t1: 13, t2: 20, t3: 10, t4: 10, exam: 24, total: 67, avg: 61.3, high: 83, low: 37, pos: "13th", remark: "CREDIT" },
+                { subject: "Hausa", t1: 20, t2: 10, t3: 21, t4: 10, exam: 24, total: 75, avg: 58.9, high: 78, low: 36, pos: "5th", remark: "DISTINCTION" }
+            ]
+        };
+        document.getElementById('res-adm').innerText = activeReport.admNo;
+        document.getElementById('res-name').innerText = activeReport.name;
+        document.getElementById('res-class').innerText = activeReport.class;
+        document.getElementById('res-year').innerText = activeReport.year;
+        document.getElementById('res-term').innerText = activeReport.term;
+        document.getElementById('res-term-header').innerText = `${activeReport.term.toUpperCase()} ACADEMIC REPORT`;
+        document.getElementById('res-timestamp').innerText = `Uploaded: ${activeReport.uploadTimestamp || 'N/A'}`;
+        document.getElementById('res-age').innerText = activeReport.age;
+        document.getElementById('res-avg-age').innerText = activeReport.avgAge;
+        document.getElementById('res-no-in-class').innerText = activeReport.noInClass;
+        document.getElementById('res-attendance').innerText = activeReport.attendance;
+        document.getElementById('res-avg-score').innerText = activeReport.avgScore;
+        document.getElementById('res-position').innerText = activeReport.position;
+        document.getElementById('res-status').innerText = activeReport.status;
+        document.getElementById('res-resumption').innerText = activeReport.resumption;
+        document.getElementById('res-counselor-remark').innerText = activeReport.counselorRemark;
+        document.getElementById('res-house-remark').innerText = activeReport.houseRemark;
+        document.getElementById('res-form-remark').innerText = activeReport.formRemark;
+        document.getElementById('res-principal-remark').innerText = activeReport.principalRemark;
+        const tbody = document.getElementById('res-scores-body');
+        tbody.innerHTML = "";
+        activeReport.scores.forEach(s => {
+            tbody.innerHTML += `
+                <tr>
+                    <td class="p-1 border border-slate-800 font-bold text-left">${s.subject}</td>
+                    <td class="p-1 border border-slate-800 text-center">${s.t1}</td>
+                    <td class="p-1 border border-slate-800 text-center">${s.t2}</td>
+                    <td class="p-1 border border-slate-800 text-center">${s.t3}</td>
+                    <td class="p-1 border border-slate-800 text-center">${s.t4}</td>
+                    <td class="p-1 border border-slate-800 text-center">${s.exam}</td>
+                    <td class="p-1 border border-slate-800 text-center font-bold bg-slate-100">${s.total}</td>
+                    <td class="p-1 border border-slate-800 text-center">${s.avg}</td>
+                    <td class="p-1 border border-slate-800 text-center">${s.high}</td>
+                    <td class="p-1 border border-slate-800 text-center">${s.low}</td>
+                    <td class="p-1 border border-slate-800 text-center">${s.pos}</td>
+                    <td class="p-1 border border-slate-800 text-left font-bold">${s.remark}</td>
+                </tr>
             `;
-            
-            tbody.appendChild(tr);
-        }
-
-        function handleTabKey(event, inputElement) {
-            if ((event.key === 'Tab' && !event.shiftKey) || event.key === 'Enter') {
-                const row = inputElement.closest('tr');
-                const isLastRow = !row.nextElementSibling;
-                
-                if (isLastRow) {
-                    event.preventDefault();
-                    addNewSubjectRow("");
-                    
-                    const newRow = document.getElementById('edit-scores-body').lastElementChild;
-                    const newSubjectInput = newRow.querySelector('.sub-name');
-                    if (newSubjectInput) {
-                        newSubjectInput.focus();
-                    }
-                }
-            }
-        }
-
-        function calcRowTotal(input) {
-            const row = input.closest('tr');
-            const t1 = parseFloat(row.querySelector('.sub-t1').value) || 0;
-            const t2 = parseFloat(row.querySelector('.sub-t2').value) || 0;
-            const t3 = parseFloat(row.querySelector('.sub-t3').value) || 0;
-            const t4 = parseFloat(row.querySelector('.sub-t4').value) || 0;
-            const exam = parseFloat(row.querySelector('.sub-exam').value) || 0;
-            row.querySelector('.sub-total').innerText = t1 + t2 + t3 + t4 + exam;
-        }
-
-        // LOAD PUBLISHED STUDENT RESULT FOR ADMIN EDITING
-        function loadStudentForEditing() {
-            const query = document.getElementById('admin-search-query').value.trim().toLowerCase();
-            if (!query) {
-                alert('Please enter a student name to search.');
-                return;
-            }
-
-            const archives = JSON.parse(localStorage.getItem('studentResultArchives')) || [];
-            const record = archives.find(item => item.name.toLowerCase() === query);
-
-            if (!record) {
-                alert(`No published result record found matching "${query}".`);
-                return;
-            }
-
-            // Populate Metadata
-            document.getElementById('edit-adm').value = record.admNo || '';
-            document.getElementById('edit-name').value = record.name || '';
-            document.getElementById('edit-class').value = record.class || 'JSS 3';
-            document.getElementById('edit-year').value = record.year || '';
-            document.getElementById('edit-term').value = record.term || 'Third Term';
-            document.getElementById('edit-age').value = record.age || '';
-            document.getElementById('edit-avg-age').value = record.avgAge || '';
-            document.getElementById('edit-no-class').value = record.noInClass || '';
-            document.getElementById('edit-attendance').value = record.attendance || '';
-            document.getElementById('edit-avg-score').value = record.avgScore || '';
-            document.getElementById('edit-position').value = record.position || '';
-            document.getElementById('edit-status').value = record.status || '';
-            document.getElementById('edit-resumption').value = record.resumption || '';
-
-            // Populate Remarks
-            document.getElementById('edit-counselor-remark').value = record.counselorRemark || '';
-            document.getElementById('edit-house-remark').value = record.houseRemark || '';
-            document.getElementById('edit-form-remark').value = record.formRemark || '';
-            document.getElementById('edit-principal-remark').value = record.principalRemark || '';
-
-            // Populate Subject Rows
-            const tbody = document.getElementById('edit-scores-body');
-            tbody.innerHTML = '';
-            if (record.scores && record.scores.length > 0) {
-                record.scores.forEach(s => {
-                    addNewSubjectRow(
-                        s.subject || '', 
-                        s.t1 || 0, 
-                        s.t2 || 0, 
-                        s.t3 || 0, 
-                        s.t4 || 0, 
-                        s.exam || 0, 
-                        s.avg || 0, 
-                        s.high || 0, 
-                        s.low || 0, 
-                        s.pos || '-', 
-                        s.remark || ''
-                    );
-                });
-            } else {
-                renderAdminSpreadsheet();
-            }
-
-            alert(`Successfully loaded results for ${record.name}. You can make modifications below and save.`);
-        }
-
-        function handleResultSearch(e) {
-            e.preventDefault();
-            const searchName = document.getElementById('search-name').value.trim().toLowerCase();
-            const searchClass = document.getElementById('search-class').value;
-            const searchTerm = document.getElementById('search-term').value;
-            const feedback = document.getElementById('search-feedback');
-
-            const allArchives = JSON.parse(localStorage.getItem('studentResultArchives')) || [];
-
-            const matchedRecord = allArchives.find(item => 
-                item.name.toLowerCase() === searchName && 
-                item.class === searchClass && 
-                item.term === searchTerm
-            );
-
-            if (matchedRecord) {
-                feedback.innerHTML = `<span class="text-green-700">Record found! Opening report card...</span>`;
-                sessionStorage.setItem('activeReport', JSON.stringify(matchedRecord));
-                setTimeout(() => {
-                    window.open('result.html', '_blank');
-                    feedback.innerHTML = "";
-                }, 500);
-            } else {
-                feedback.innerHTML = `<span class="text-red-600">No matching record found for "${searchName}" in ${searchClass} for ${searchTerm}. Please check your details or contact admin.</span>`;
-            }
-        }
-
-        function handleAdminLogin(e) {
-            e.preventDefault();
-            const pass = document.getElementById('admin-pass').value;
-            if (pass === 'delight') {
-                document.getElementById('admin-login-card').classList.add('hidden');
-                document.getElementById('admin-dashboard').classList.remove('hidden');
-                if (document.querySelectorAll('.subject-row').length === 0) {
-                    renderAdminSpreadsheet();
-                }
-            } else {
-                alert('Access Denied: Invalid Administrative Password.');
-                document.getElementById('admin-pass').value = "";
-            }
-        }
-
-        function logoutAdmin() {
-            document.getElementById('admin-dashboard').classList.add('hidden');
-            document.getElementById('admin-login-card').classList.remove('hidden');
-            document.getElementById('admin-pass').value = "";
-        }
-
-        function saveAndPublishResult() {
-            const now = new Date();
-            const dateStr = now.toLocaleDateString();
-            const timeStr = now.toLocaleTimeString();
-            const timestamp = `${dateStr} at ${timeStr}`;
-
-            const studentRecord = {
-                admNo: document.getElementById('edit-adm').value,
-                name: document.getElementById('edit-name').value.trim(),
-                class: document.getElementById('edit-class').value,
-                year: document.getElementById('edit-year').value,
-                term: document.getElementById('edit-term').value,
-                age: document.getElementById('edit-age').value,
-                avgAge: document.getElementById('edit-avg-age').value,
-                noInClass: document.getElementById('edit-no-class').value,
-                attendance: document.getElementById('edit-attendance').value,
-                avgScore: document.getElementById('edit-avg-score').value,
-                position: document.getElementById('edit-position').value,
-                status: document.getElementById('edit-status').value,
-                resumption: document.getElementById('edit-resumption').value,
-                counselorRemark: document.getElementById('edit-counselor-remark').value,
-                houseRemark: document.getElementById('edit-house-remark').value,
-                formRemark: document.getElementById('edit-form-remark').value,
-                principalRemark: document.getElementById('edit-principal-remark').value,
-                uploadTimestamp: timestamp,
-                scores: []
-            };
-
-            const rows = document.querySelectorAll('.subject-row');
-            rows.forEach(row => {
-                studentRecord.scores.push({
-                    subject: row.querySelector('.sub-name').value,
-                    t1: row.querySelector('.sub-t1').value,
-                    t2: row.querySelector('.sub-t2').value,
-                    t3: row.querySelector('.sub-t3').value,
-                    t4: row.querySelector('.sub-t4').value,
-                    exam: row.querySelector('.sub-exam').value,
-                    total: row.querySelector('.sub-total').innerText,
-                    avg: row.querySelector('.sub-avg').value,
-                    high: row.querySelector('.sub-high').value,
-                    low: row.querySelector('.sub-low').value,
-                    pos: row.querySelector('.sub-pos').value,
-                    remark: row.querySelector('.sub-remark').value
-                });
-            });
-
-            let archives = JSON.parse(localStorage.getItem('studentResultArchives')) || [];
-            
-            const existingIndex = archives.findIndex(item => 
-                item.name.toLowerCase() === studentRecord.name.toLowerCase() && 
-                item.class === studentRecord.class &&
-                item.term === studentRecord.term && 
-                item.year === studentRecord.year
-            );
-
-            if (existingIndex >= 0) {
-                archives[existingIndex] = studentRecord;
-            } else {
-                archives.push(studentRecord);
-            }
-
-            localStorage.setItem('studentResultArchives', JSON.stringify(archives));
-            localStorage.setItem('publishedStudentResult', JSON.stringify(studentRecord));
-            
-            alert(`Success! Result for ${studentRecord.name} (${studentRecord.class} ${studentRecord.term}) has been archived and published on ${timestamp}.`);
-        }
+        });
     </script>
 </body>
 </html>
